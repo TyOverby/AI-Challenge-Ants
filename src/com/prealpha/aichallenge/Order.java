@@ -1,3 +1,5 @@
+package com.prealpha.aichallenge;
+
 /**
  * Represents an order to be issued.
  */

@@ -1,3 +1,5 @@
+package com.prealpha.aichallenge;
+
 /**
  * Represents type of tile on the game map.
  */

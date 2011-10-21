@@ -1,3 +1,5 @@
+package com.prealpha.aichallenge;
+
 /**
  * Represents a tile of the game map.
  */

@@ -1,3 +1,5 @@
+package com.prealpha.aichallenge;
+
 /**
  * Provides basic game state handling.
  */

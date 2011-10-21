@@ -1,3 +1,5 @@
+package com.prealpha.aichallenge;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;

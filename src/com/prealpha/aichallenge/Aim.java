@@ -1,3 +1,5 @@
+package com.prealpha.aichallenge;
+
 import java.util.HashMap;
 import java.util.Map;
 
