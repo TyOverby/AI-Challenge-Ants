@@ -50,8 +50,7 @@ public class PathTest {
 		Point start = new Point(0,0);
 		Point next = new Point(0,1);
 		
-		Path path = new Path(start);
-		path.addPoint(next);
+		Path path = new Path(start,next);
 		
 		assert(path.getHead().equals(next));
 	}
