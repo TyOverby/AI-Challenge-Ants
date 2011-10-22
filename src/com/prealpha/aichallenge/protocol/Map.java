@@ -91,7 +91,7 @@ public final class Map {
 	 *         <cod>tile</code>
 	 */
 	public Ilk getIlk(Point point, Aim direction) {
-		Point newTile = getTile(point, direction);
+		Point newTile = getPoint(point, direction);
 		return this.ilk[newTile.getRow()][newTile.getCol()];
 	}
 
@@ -105,7 +105,7 @@ public final class Map {
 	 * 
 	 * @return location in <code>direction</code> from <cod>tile</code>
 	 */
-	public Point getTile(Point point, Aim direction) {
+	public Point getPoint(Point point, Aim direction) {
 		int row = (point.getRow() + direction.getRowDelta()) % rows;
 		if (row < 0) {
 			row += rows;
@@ -120,7 +120,7 @@ public final class Map {
 	public Set<Point> getAdjacent(Point center) {
 		Set<Point> adjacent = new HashSet<Point>(4);
 		for (Aim direction : Aim.values()) {
-			adjacent.add(getTile(center, direction));
+			adjacent.add(getPoint(center, direction));
 		}
 		return adjacent;
 	}
