@@ -31,6 +31,7 @@ public final class Order {
 
 	@Override
 	public String toString() {
-		return String.format("o %s %s", point, direction);
+		return String.format("o %d %d %s", point.getRow(), point.getCol(),
+				direction);
 	}
 }

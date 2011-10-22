@@ -110,8 +110,8 @@ public final class Path {
 	public String toString() {
 		String toReturn = "";
 		for (Point point : nodes) {
-			toReturn += String.format("(%s) ", point);
+			toReturn += String.format("%s, ", point);
 		}
-		return toReturn.trim();
+		return toReturn.trim().substring(0, toReturn.length() - 2);
 	}
 }
