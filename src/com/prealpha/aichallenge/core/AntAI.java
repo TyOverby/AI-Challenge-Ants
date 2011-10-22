@@ -1,6 +1,5 @@
 package com.prealpha.aichallenge.core;
 
-import com.prealpha.aichallenge.ai.AStarAgent;
 import com.prealpha.aichallenge.protocol.GameMap;
 import com.prealpha.aichallenge.protocol.Point;
 

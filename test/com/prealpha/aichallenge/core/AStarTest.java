@@ -1,4 +1,4 @@
-package com.prealpha.aichallenge.ai;
+package com.prealpha.aichallenge.core;
 
 import static org.junit.Assert.*;
 
