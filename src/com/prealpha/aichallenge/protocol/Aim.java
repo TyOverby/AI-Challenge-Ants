@@ -34,7 +34,7 @@ public enum Aim {
     
     private final char symbol;
     
-    Aim(int rowDelta, int colDelta, char symbol) {
+    private Aim(int rowDelta, int colDelta, char symbol) {
         this.rowDelta = rowDelta;
         this.colDelta = colDelta;
         this.symbol = symbol;

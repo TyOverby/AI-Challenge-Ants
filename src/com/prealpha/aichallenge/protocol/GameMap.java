@@ -9,8 +9,10 @@ import java.util.Set;
 /**
  * Holds all game data and current game state.
  */
-public class GameMap {
-	/** Maximum map size. */
+public final class GameMap {
+	/**
+	 * Maximum map size.
+	 */
 	public static final int MAX_MAP_SIZE = 256;
 
 	private final int loadTime;
@@ -65,7 +67,7 @@ public class GameMap {
 	 * @param spawnRadius2
 	 *            squared spawn radius of each ant
 	 */
-	public GameMap(int loadTime, int turnTime, int rows, int cols, int turns,
+	GameMap(int loadTime, int turnTime, int rows, int cols, int turns,
 			int viewRadius2, int attackRadius2, int spawnRadius2) {
 		this.loadTime = loadTime;
 		this.turnTime = turnTime;
@@ -76,7 +78,7 @@ public class GameMap {
 		this.attackRadius2 = attackRadius2;
 		this.spawnRadius2 = spawnRadius2;
 		map = new Ilk[rows][cols];
-		Point.setBounds(new Point(rows,cols));
+		Point.setBounds(new Point(rows, cols));
 		for (Ilk[] row : map) {
 			Arrays.fill(row, Ilk.LAND);
 		}
@@ -160,7 +162,7 @@ public class GameMap {
 	 * @param turnStartTime
 	 *            turn start time
 	 */
-	public void setTurnStartTime(long turnStartTime) {
+	void setTurnStartTime(long turnStartTime) {
 		this.turnStartTime = turnStartTime;
 	}
 
@@ -195,7 +197,7 @@ public class GameMap {
 	 * @param ilk
 	 *            ilk to be set at <code>tile</code>
 	 */
-	public void setIlk(Point tile, Ilk ilk) {
+	void setIlk(Point tile, Ilk ilk) {
 		map[tile.getRow()][tile.getCol()] = ilk;
 	}
 
@@ -325,41 +327,41 @@ public class GameMap {
 	 * @return orthogonal directions from <code>t1</code> to <code>t2</code>
 	 */
 	public List<Aim> getDirections(Point t1, Point t2) {
-        List<Aim> directions = new ArrayList<Aim>();
-        if (t1.getRow() < t2.getRow()) {
-            if (t2.getRow() - t1.getRow() >= rows / 2) {
-                directions.add(Aim.NORTH);
-            } else {
-                directions.add(Aim.SOUTH);
-            }
-        } else if (t1.getRow() > t2.getRow()) {
-            if (t1.getRow() - t2.getRow() >= rows / 2) {
-                directions.add(Aim.SOUTH);
-            } else {
-                directions.add(Aim.NORTH);
-            }
-        }
-        if (t1.getCol() < t2.getCol()) {
-            if (t2.getCol() - t1.getCol() >= cols / 2) {
-                directions.add(Aim.WEST);
-            } else {
-                directions.add(Aim.EAST);
-            }
-        } else if (t1.getCol() > t2.getCol()) {
-            if (t1.getCol() - t2.getCol() >= cols / 2) {
-                directions.add(Aim.EAST);
-            } else {
-                directions.add(Aim.WEST);
-            }
-        }
-        return directions;
+		List<Aim> directions = new ArrayList<Aim>();
+		if (t1.getRow() < t2.getRow()) {
+			if (t2.getRow() - t1.getRow() >= rows / 2) {
+				directions.add(Aim.NORTH);
+			} else {
+				directions.add(Aim.SOUTH);
+			}
+		} else if (t1.getRow() > t2.getRow()) {
+			if (t1.getRow() - t2.getRow() >= rows / 2) {
+				directions.add(Aim.SOUTH);
+			} else {
+				directions.add(Aim.NORTH);
+			}
+		}
+		if (t1.getCol() < t2.getCol()) {
+			if (t2.getCol() - t1.getCol() >= cols / 2) {
+				directions.add(Aim.WEST);
+			} else {
+				directions.add(Aim.EAST);
+			}
+		} else if (t1.getCol() > t2.getCol()) {
+			if (t1.getCol() - t2.getCol() >= cols / 2) {
+				directions.add(Aim.EAST);
+			} else {
+				directions.add(Aim.WEST);
+			}
+		}
+		return directions;
 
 	}
 
 	/**
 	 * Clears game state information about my ants locations.
 	 */
-	public void clearMyAnts() {
+	void clearMyAnts() {
 		for (Point myAnt : myAnts) {
 			map[myAnt.getRow()][myAnt.getCol()] = Ilk.LAND;
 		}
@@ -369,7 +371,7 @@ public class GameMap {
 	/**
 	 * Clears game state information about enemy ants locations.
 	 */
-	public void clearEnemyAnts() {
+	void clearEnemyAnts() {
 		for (Point enemyAnt : enemyAnts) {
 			map[enemyAnt.getRow()][enemyAnt.getCol()] = Ilk.LAND;
 		}
@@ -379,14 +381,14 @@ public class GameMap {
 	/**
 	 * Clears game state information about my hills locations.
 	 */
-	public void clearMyHills() {
+	void clearMyHills() {
 		myHills.clear();
 	}
 
 	/**
 	 * Clears game state information about enemy hills locations.
 	 */
-	public void clearEnemyHills() {
+	void clearEnemyHills() {
 		enemyHills.clear();
 	}
 
@@ -398,7 +400,7 @@ public class GameMap {
 	 * @param tile
 	 *            location on the game map to be updated
 	 */
-	public void update(Ilk ilk, Point tile) {
+	void update(Ilk ilk, Point tile) {
 		map[tile.getRow()][tile.getCol()] = ilk;
 
 		switch (ilk) {
@@ -422,11 +424,12 @@ public class GameMap {
 	 * @param tile
 	 *            location on the game map to be updated
 	 */
-	public void updateHills(int owner, Point tile) {
-		if (owner > 0)
+	void updateHills(int owner, Point tile) {
+		if (owner > 0) {
 			enemyHills.add(tile);
-		else
+		} else {
 			myHills.add(tile);
+		}
 	}
 
 	/**

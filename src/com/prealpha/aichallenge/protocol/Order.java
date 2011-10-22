@@ -3,7 +3,7 @@ package com.prealpha.aichallenge.protocol;
 /**
  * Represents an order to be issued.
  */
-public class Order {
+public final class Order {
 	private final int row;
 
 	private final int col;
