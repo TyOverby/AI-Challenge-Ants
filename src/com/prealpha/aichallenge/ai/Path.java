@@ -19,7 +19,7 @@ public final class Path {
 		this(map, Collections.singletonList(startingNode));
 	}
 
-	Path(GameMap map, Point... nodes) {
+	public Path(GameMap map, Point... nodes) {
 		this(map, Arrays.asList(nodes));
 	}
 

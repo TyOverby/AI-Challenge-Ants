@@ -29,7 +29,7 @@ public class AStarTest {
 	 * Tests the smallest path with only a starting point
 	 */
 	@Test
-	public void TestCurrentMinOne() {
+	public void testCurrentMinOne() {
 		Point start = new Point(0, 0);
 		Point end = new Point(5, 0);
 
@@ -44,7 +44,7 @@ public class AStarTest {
 	 * Tests the smallest path with only a starting point
 	 */
 	@Test
-	public void TestAdvanceOne() {
+	public void testAdvanceOne() {
 		Point start = new Point(0, 0);
 		Point end = new Point(5, 0);
 
