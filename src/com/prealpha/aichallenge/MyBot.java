@@ -7,7 +7,7 @@ import java.util.List;
 import com.prealpha.aichallenge.core.AntAI;
 import com.prealpha.aichallenge.protocol.Aim;
 import com.prealpha.aichallenge.protocol.Bot;
-import com.prealpha.aichallenge.protocol.GameMap;
+import com.prealpha.aichallenge.protocol.Game;
 import com.prealpha.aichallenge.protocol.Point;
 
 /**
@@ -17,9 +17,9 @@ public class MyBot extends Bot {
 	// We need the game map public to make sure that we can access it from all
 	// of our other
 	// methods and classes
-	private static GameMap gm;
+	private static Game gm;
 
-	public static GameMap getGm() {
+	public static Game getGm() {
 		return gm;
 	}
 
@@ -27,7 +27,7 @@ public class MyBot extends Bot {
 
 	@Override
 	public void doTurn() {
-		GameMap ants = getGameMap();
+		Game ants = getGameMap();
 		for (Point myAnt : ants.getMyAnts()) {
 			for (Aim direction : Aim.values()) {
 				if (ants.getIlk(myAnt, direction).isPassable()) {

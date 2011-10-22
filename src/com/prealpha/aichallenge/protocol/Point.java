@@ -50,7 +50,7 @@ public final class Point {
 	 */
 	@Override
 	public int hashCode() {
-		return row * GameMap.MAX_MAP_SIZE + col;
+		return row * Game.MAX_MAP_SIZE + col;
 	}
 
 	/**

@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * Holds all game data and current game state.
  */
-public final class GameMap {
+public final class Game {
 	/**
 	 * Maximum map size.
 	 */
@@ -48,7 +48,7 @@ public final class GameMap {
 	private final Set<Order> orders = new HashSet<Order>();
 
 	/**
-	 * Creates new {@link GameMap} object.
+	 * Creates new {@link Game} object.
 	 * 
 	 * @param loadTime
 	 *            timeout for initializing and setting up the bot on turn 0
@@ -67,7 +67,7 @@ public final class GameMap {
 	 * @param spawnRadius2
 	 *            squared spawn radius of each ant
 	 */
-	GameMap(int loadTime, int turnTime, int rows, int cols, int turns,
+	Game(int loadTime, int turnTime, int rows, int cols, int turns,
 			int viewRadius2, int attackRadius2, int spawnRadius2) {
 		this.loadTime = loadTime;
 		this.turnTime = turnTime;
