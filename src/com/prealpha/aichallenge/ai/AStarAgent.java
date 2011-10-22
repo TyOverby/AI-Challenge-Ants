@@ -30,7 +30,7 @@ public class AStarAgent {
 		exploredPoints.add(this.start);
 	}
 
-	public Path findCurrentMin() {
+	Path findCurrentMin() {
 		return paths.peek();
 	}
 
@@ -42,12 +42,9 @@ public class AStarAgent {
 	}
 
 	public Path getSmallestPath() {
-		advance();
-		Path minPath = findCurrentMin();
-		if (minPath.getHead().equals(end)) {
-			return minPath;
-		} else {
-			return getSmallestPath();
+		while (!findCurrentMin().getHead().equals(end)) {
+			advance();
 		}
+		return findCurrentMin();
 	}
 }
