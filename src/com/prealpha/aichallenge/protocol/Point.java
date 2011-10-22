@@ -3,20 +3,20 @@ package com.prealpha.aichallenge.protocol;
 /**
  * Represents a tile of the game map.
  */
-public class Tile {
+public class Point {
 	private final int row;
 
 	private final int col;
 
 	/**
-	 * Creates new {@link Tile} object.
+	 * Creates new {@link Point} object.
 	 * 
 	 * @param row
 	 *            row index
 	 * @param col
 	 *            column index
 	 */
-	public Tile(int row, int col) {
+	public Point(int row, int col) {
 		this.row = row;
 		this.col = col;
 	}
@@ -44,7 +44,7 @@ public class Tile {
 	 */
 	@Override
 	public int hashCode() {
-		return row * Ants.MAX_MAP_SIZE + col;
+		return row * GameMap.MAX_MAP_SIZE + col;
 	}
 
 	/**
@@ -53,8 +53,8 @@ public class Tile {
 	@Override
 	public boolean equals(Object o) {
 		boolean result = false;
-		if (o instanceof Tile) {
-			Tile tile = (Tile) o;
+		if (o instanceof Point) {
+			Point tile = (Point) o;
 			result = row == tile.row && col == tile.col;
 		}
 		return result;

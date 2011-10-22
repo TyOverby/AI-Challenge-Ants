@@ -3,9 +3,9 @@ package com.prealpha.aichallenge;
 import java.io.IOException;
 
 import com.prealpha.aichallenge.protocol.Aim;
-import com.prealpha.aichallenge.protocol.Ants;
+import com.prealpha.aichallenge.protocol.GameMap;
 import com.prealpha.aichallenge.protocol.Bot;
-import com.prealpha.aichallenge.protocol.Tile;
+import com.prealpha.aichallenge.protocol.Point;
 
 /**
  * Starter bot implementation.
@@ -30,8 +30,8 @@ public class MyBot extends Bot {
 	 */
 	@Override
 	public void doTurn() {
-		Ants ants = getAnts();
-		for (Tile myAnt : ants.getMyAnts()) {
+		GameMap ants = getAnts();
+		for (Point myAnt : ants.getMyAnts()) {
 			for (Aim direction : Aim.values()) {
 				if (ants.getIlk(myAnt, direction).isPassable()) {
 					ants.issueOrder(myAnt, direction);

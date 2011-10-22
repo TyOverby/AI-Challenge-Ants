@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * Holds all game data and current game state.
  */
-public class Ants {
+public class GameMap {
 	/** Maximum map size. */
 	public static final int MAX_MAP_SIZE = 256;
 
@@ -33,20 +33,20 @@ public class Ants {
 
 	private final Ilk map[][];
 
-	private final Set<Tile> myAnts = new HashSet<Tile>();
+	private final Set<Point> myAnts = new HashSet<Point>();
 
-	private final Set<Tile> enemyAnts = new HashSet<Tile>();
+	private final Set<Point> enemyAnts = new HashSet<Point>();
 
-	private final Set<Tile> myHills = new HashSet<Tile>();
+	private final Set<Point> myHills = new HashSet<Point>();
 
-	private final Set<Tile> enemyHills = new HashSet<Tile>();
+	private final Set<Point> enemyHills = new HashSet<Point>();
 
-	private final Set<Tile> foodTiles = new HashSet<Tile>();
+	private final Set<Point> foodTiles = new HashSet<Point>();
 
 	private final Set<Order> orders = new HashSet<Order>();
 
 	/**
-	 * Creates new {@link Ants} object.
+	 * Creates new {@link GameMap} object.
 	 * 
 	 * @param loadTime
 	 *            timeout for initializing and setting up the bot on turn 0
@@ -65,7 +65,7 @@ public class Ants {
 	 * @param spawnRadius2
 	 *            squared spawn radius of each ant
 	 */
-	public Ants(int loadTime, int turnTime, int rows, int cols, int turns,
+	public GameMap(int loadTime, int turnTime, int rows, int cols, int turns,
 			int viewRadius2, int attackRadius2, int spawnRadius2) {
 		this.loadTime = loadTime;
 		this.turnTime = turnTime;
@@ -182,7 +182,7 @@ public class Ants {
 	 * 
 	 * @return ilk at the <cod>tile</code>
 	 */
-	public Ilk getIlk(Tile tile) {
+	public Ilk getIlk(Point tile) {
 		return map[tile.getRow()][tile.getCol()];
 	}
 
@@ -194,7 +194,7 @@ public class Ants {
 	 * @param ilk
 	 *            ilk to be set at <code>tile</code>
 	 */
-	public void setIlk(Tile tile, Ilk ilk) {
+	public void setIlk(Point tile, Ilk ilk) {
 		map[tile.getRow()][tile.getCol()] = ilk;
 	}
 
@@ -210,8 +210,8 @@ public class Ants {
 	 * @return ilk at the location in <code>direction</code> from
 	 *         <cod>tile</code>
 	 */
-	public Ilk getIlk(Tile tile, Aim direction) {
-		Tile newTile = getTile(tile, direction);
+	public Ilk getIlk(Point tile, Aim direction) {
+		Point newTile = getTile(tile, direction);
 		return map[newTile.getRow()][newTile.getCol()];
 	}
 
@@ -225,7 +225,7 @@ public class Ants {
 	 * 
 	 * @return location in <code>direction</code> from <cod>tile</code>
 	 */
-	public Tile getTile(Tile tile, Aim direction) {
+	public Point getTile(Point tile, Aim direction) {
 		int row = (tile.getRow() + direction.getRowDelta()) % rows;
 		if (row < 0) {
 			row += rows;
@@ -234,7 +234,7 @@ public class Ants {
 		if (col < 0) {
 			col += cols;
 		}
-		return new Tile(row, col);
+		return new Point(row, col);
 	}
 
 	/**
@@ -242,7 +242,7 @@ public class Ants {
 	 * 
 	 * @return a set containing all my ants locations
 	 */
-	public Set<Tile> getMyAnts() {
+	public Set<Point> getMyAnts() {
 		return myAnts;
 	}
 
@@ -251,7 +251,7 @@ public class Ants {
 	 * 
 	 * @return a set containing all enemy ants locations
 	 */
-	public Set<Tile> getEnemyAnts() {
+	public Set<Point> getEnemyAnts() {
 		return enemyAnts;
 	}
 
@@ -260,7 +260,7 @@ public class Ants {
 	 * 
 	 * @return a set containing all my hills locations
 	 */
-	public Set<Tile> getMyHills() {
+	public Set<Point> getMyHills() {
 		return myHills;
 	}
 
@@ -269,7 +269,7 @@ public class Ants {
 	 * 
 	 * @return a set containing all enemy hills locations
 	 */
-	public Set<Tile> getEnemyHills() {
+	public Set<Point> getEnemyHills() {
 		return enemyHills;
 	}
 
@@ -278,7 +278,7 @@ public class Ants {
 	 * 
 	 * @return a set containing all food locations
 	 */
-	public Set<Tile> getFoodTiles() {
+	public Set<Point> getFoodTiles() {
 		return foodTiles;
 	}
 
@@ -301,7 +301,7 @@ public class Ants {
 	 * 
 	 * @return distance between <code>t1</code> and <code>t2</code>
 	 */
-	public int getDistance(Tile t1, Tile t2) {
+	public int getDistance(Point t1, Point t2) {
 		int rowDelta = Math.abs(t1.getRow() - t2.getRow());
 		int colDelta = Math.abs(t1.getCol() - t2.getCol());
 		rowDelta = Math.min(rowDelta, rows - rowDelta);
@@ -320,7 +320,7 @@ public class Ants {
 	 * 
 	 * @return orthogonal directions from <code>t1</code> to <code>t2</code>
 	 */
-	public List<Aim> getDirections(Tile t1, Tile t2) {
+	public List<Aim> getDirections(Point t1, Point t2) {
 		List<Aim> directions = new ArrayList<Aim>();
 		if (t1.getRow() < t2.getRow()) {
 			if (t2.getRow() - t1.getRow() >= rows / 2) {
@@ -355,7 +355,7 @@ public class Ants {
 	 * Clears game state information about my ants locations.
 	 */
 	public void clearMyAnts() {
-		for (Tile myAnt : myAnts) {
+		for (Point myAnt : myAnts) {
 			map[myAnt.getRow()][myAnt.getCol()] = Ilk.LAND;
 		}
 		myAnts.clear();
@@ -365,7 +365,7 @@ public class Ants {
 	 * Clears game state information about enemy ants locations.
 	 */
 	public void clearEnemyAnts() {
-		for (Tile enemyAnt : enemyAnts) {
+		for (Point enemyAnt : enemyAnts) {
 			map[enemyAnt.getRow()][enemyAnt.getCol()] = Ilk.LAND;
 		}
 		enemyAnts.clear();
@@ -393,7 +393,7 @@ public class Ants {
 	 * @param tile
 	 *            location on the game map to be updated
 	 */
-	public void update(Ilk ilk, Tile tile) {
+	public void update(Ilk ilk, Point tile) {
 		map[tile.getRow()][tile.getCol()] = ilk;
 		switch (ilk) {
 		case FOOD:
@@ -416,7 +416,7 @@ public class Ants {
 	 * @param tile
 	 *            location on the game map to be updated
 	 */
-	public void updateHills(int owner, Tile tile) {
+	public void updateHills(int owner, Point tile) {
 		if (owner > 0)
 			enemyHills.add(tile);
 		else
@@ -431,7 +431,7 @@ public class Ants {
 	 * @param direction
 	 *            direction in which to move my ant
 	 */
-	public void issueOrder(Tile myAnt, Aim direction) {
+	public void issueOrder(Point myAnt, Aim direction) {
 		Order order = new Order(myAnt, direction);
 		orders.add(order);
 		System.out.println(order);
