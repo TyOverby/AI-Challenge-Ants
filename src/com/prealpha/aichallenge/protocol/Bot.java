@@ -43,12 +43,12 @@ public abstract class Bot extends AbstractSystemInputParser {
 	@Override
 	protected void beforeUpdate() {
 		game.setTurnStartTime(System.currentTimeMillis());
-		game.getOrders().clear();
+		game.clearOrders();
 		map.clearMyAnts();
 		map.clearEnemyAnts();
 		map.clearMyHills();
 		map.clearEnemyHills();
-		map.getFoodTiles().clear();
+		map.clearFoodTiles();
 	}
 
 	@Override

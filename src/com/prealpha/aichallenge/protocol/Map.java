@@ -8,6 +8,7 @@ package com.prealpha.aichallenge.protocol;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -122,7 +123,7 @@ public final class Map {
 	 * @return a set containing all my ants locations
 	 */
 	public Set<Point> getMyAnts() {
-		return myAnts;
+		return Collections.unmodifiableSet(myAnts);
 	}
 
 	/**
@@ -131,7 +132,7 @@ public final class Map {
 	 * @return a set containing all enemy ants locations
 	 */
 	public Set<Point> getEnemyAnts() {
-		return enemyAnts;
+		return Collections.unmodifiableSet(enemyAnts);
 	}
 
 	/**
@@ -140,7 +141,7 @@ public final class Map {
 	 * @return a set containing all my hills locations
 	 */
 	public Set<Point> getMyHills() {
-		return myHills;
+		return Collections.unmodifiableSet(myHills);
 	}
 
 	/**
@@ -149,7 +150,7 @@ public final class Map {
 	 * @return a set containing all enemy hills locations
 	 */
 	public Set<Point> getEnemyHills() {
-		return enemyHills;
+		return Collections.unmodifiableSet(enemyHills);
 	}
 
 	/**
@@ -158,7 +159,7 @@ public final class Map {
 	 * @return a set containing all food locations
 	 */
 	public Set<Point> getFoodTiles() {
-		return foodTiles;
+		return Collections.unmodifiableSet(foodTiles);
 	}
 
 	/**
@@ -251,6 +252,10 @@ public final class Map {
 	 */
 	void clearEnemyHills() {
 		enemyHills.clear();
+	}
+	
+	void clearFoodTiles() {
+		foodTiles.clear();
 	}
 
 	/**

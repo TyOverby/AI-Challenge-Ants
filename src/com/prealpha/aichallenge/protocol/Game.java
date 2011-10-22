@@ -1,5 +1,6 @@
 package com.prealpha.aichallenge.protocol;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -144,7 +145,7 @@ public final class Game {
 	}
 
 	public Set<Order> getOrders() {
-		return orders;
+		return Collections.unmodifiableSet(orders);
 	}
 
 	/**
@@ -160,5 +161,9 @@ public final class Game {
 		orders.add(order);
 		System.out.println(order);
 		System.out.flush();
+	}
+
+	void clearOrders() {
+		orders.clear();
 	}
 }
