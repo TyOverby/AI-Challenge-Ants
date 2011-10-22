@@ -2,7 +2,7 @@ package com.prealpha.aichallenge.core;
 
 import com.prealpha.aichallenge.MyBot;
 import com.prealpha.aichallenge.astar.AStarAgent;
-import com.prealpha.aichallenge.protocol.GameMap;
+import com.prealpha.aichallenge.protocol.Game;
 import com.prealpha.aichallenge.protocol.Point;
 
 public class AntAI {
@@ -10,7 +10,7 @@ public class AntAI {
 	private Point projectedPosition;
 	private AStarAgent agent;
 	
-	private GameMap currentGameState;
+	private Game currentGameState;
 	private MyBot myBot;
 	
 	public AntAI(Point p,MyBot myBot){
