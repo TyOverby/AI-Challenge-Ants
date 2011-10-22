@@ -43,6 +43,7 @@ final class MyBot extends Bot {
 
 	@Override
 	protected void removeAnt(int row, int col, int owner) {
+		super.removeAnt(row, col, owner);
 		if (owner == 0) {
 			Point point = new Point(row, col);
 			ants.remove(point);
