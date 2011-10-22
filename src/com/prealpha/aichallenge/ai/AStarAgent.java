@@ -22,7 +22,8 @@ public class AStarAgent {
 		paths = new PriorityQueue<Path>(1, new Comparator<Path>() {
 			@Override
 			public int compare(Path p1, Path p2) {
-				return (int) (p1.getTotalDist(end) - p2.getTotalDist(end));
+				return (int) Math.round(p1.getTotalDist(end)
+						- p2.getTotalDist(end));
 			}
 		});
 
