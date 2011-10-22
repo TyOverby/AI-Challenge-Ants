@@ -1,47 +1,53 @@
 package com.prealpha.aichallenge;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.prealpha.aichallenge.core.AntAI;
 import com.prealpha.aichallenge.protocol.Aim;
 import com.prealpha.aichallenge.protocol.Bot;
-import com.prealpha.aichallenge.protocol.Game;
-import com.prealpha.aichallenge.protocol.GameMap;
+import com.prealpha.aichallenge.protocol.Order;
 import com.prealpha.aichallenge.protocol.Point;
 
-/**
- * Starter bot implementation.
- */
-public class MyBot extends Bot {
-	// We need the game map public to make sure that we can access it from all
-	// of our other
-	// methods and classes
-	private static Game gm;
+final class MyBot extends Bot {
+	private final Map<Point, AntAI> ants;
 
-	public static Game getGm() {
-		return gm;
+	private MyBot() {
+		ants = new HashMap<Point, AntAI>();
 	}
 
-	private final List<AntAI> ants = new ArrayList<AntAI>(100);
+	@Override
+	protected void beforeUpdate() {
+		for (Order order : getGame().getOrders()) {
+			Point point = order.getPoint();
+			Point target = order.getTarget(getMap());
+			AntAI ant = ants.get(point);
+			ants.remove(point);
+			ants.put(target, ant);
+		}
+		super.beforeUpdate();
+	}
 
 	@Override
-	public void doTurn() {
-		Game game = getGame();
-		GameMap map = getMap();
-		for (Point myAnt : map.getMyAnts()) {
+	protected void doTurn() {
+		for (Point myAnt : getMap().getMyAnts()) {
 			for (Aim direction : Aim.values()) {
-				if (map.getIlk(myAnt, direction).isPassable()) {
-					game.issueOrder(myAnt, direction);
+				if (getMap().getIlk(myAnt, direction).isPassable()) {
+					getGame().issueOrder(myAnt, direction);
 					break;
 				}
 			}
 		}
 	}
 
-	public void removeAntAI(AntAI ant) {
-		ants.remove(ant);
+	@Override
+	protected void removeAnt(int row, int col, int owner) {
+		super.removeAnt(row, col, owner);
+		if (owner == 0) {
+			Point point = new Point(row, col);
+			ants.remove(point);
+		}
 	}
 
 	public static void main(String... args) throws IOException {

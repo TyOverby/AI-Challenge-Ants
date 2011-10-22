@@ -21,8 +21,17 @@ public final class Order {
 		this.direction = direction;
 	}
 
+	public Point getPoint() {
+		return point;
+	}
+
+	public Point getTarget(GameMap map) {
+		return map.getPoint(point, direction);
+	}
+
 	@Override
 	public String toString() {
-		return String.format("o %s %s", point, direction);
+		return String.format("o %d %d %s", point.getRow(), point.getCol(),
+				direction);
 	}
 }
