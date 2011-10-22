@@ -1,7 +1,6 @@
 package com.prealpha.aichallenge.ai;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
@@ -12,9 +11,7 @@ import com.prealpha.aichallenge.protocol.Point;
 public class AStarAgent {
 	private final Point start, end;
 
-	public final Queue<Path> paths;
-
-	private final Set<Point> exploredPoints = new HashSet<Point>();
+	private final Queue<Path> paths;
 
 	public AStarAgent(GameMap map, Point start, final Point end) {
 		this.start = start;
@@ -28,7 +25,6 @@ public class AStarAgent {
 		});
 
 		paths.add(new Path(map, this.start));
-		exploredPoints.add(this.start);
 	}
 
 	Path findCurrentMin() {
@@ -37,11 +33,8 @@ public class AStarAgent {
 
 	void advance() {
 		Path minPath = findCurrentMin();
-		
-		Set<Path> newPaths = minPath.getNewPathsFromHead(exploredPoints);
-		
-		// Add all of its children
-		paths.addAll(newPaths);
+		Set<Path> children = minPath.getNewPathsFromHead();
+		paths.addAll(children);
 		paths.remove(minPath);
 	}
 

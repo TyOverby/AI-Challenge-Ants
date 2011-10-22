@@ -13,7 +13,7 @@ import com.prealpha.aichallenge.protocol.GameMap;
 import com.prealpha.aichallenge.protocol.Ilk;
 import com.prealpha.aichallenge.protocol.Point;
 
-public class AStarTest {
+public final class AStarTest {
 	private static final int ROWS = 20;
 
 	private static final int COLS = 20;
@@ -24,13 +24,12 @@ public class AStarTest {
 
 	@Before
 	public void setUp() throws InstantiationException, IllegalAccessException,
-	InvocationTargetException {
+			InvocationTargetException {
 		// since I don't want to make this constructor public
 		Constructor<?> constructor = GameMap.class.getDeclaredConstructors()[0];
 		constructor.setAccessible(true);
 		map = (GameMap) constructor.newInstance(ROWS, COLS);
 		obstacleMap = (GameMap) constructor.newInstance(ROWS, COLS);
-
 		for (Method method : GameMap.class.getDeclaredMethods()) {
 			if (method.getName().equals("update")) {
 				method.setAccessible(true);
@@ -47,12 +46,9 @@ public class AStarTest {
 	public void testCurrentMinOne() {
 		Point start = new Point(0, 0);
 		Point end = new Point(5, 0);
-
 		AStarAgent agent = new AStarAgent(map, start, end);
-
-		Path curMin = agent.findCurrentMin();
-
-		assertEquals(new Path(map, start), curMin);
+		Path path = agent.findCurrentMin();
+		assertEquals(new Path(map, start), path);
 	}
 
 	/**

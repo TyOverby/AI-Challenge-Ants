@@ -32,12 +32,11 @@ public final class Path {
 		nodes.add(p);
 	}
 
-	public Set<Path> getNewPathsFromHead(Set<Point> explored) {
+	public Set<Path> getNewPathsFromHead() {
 		Set<Path> toReturn = new HashSet<Path>();
-
 		Set<Point> adjacent = map.getAdjacent(getHead());
 		for (Point point : adjacent) {
-			if (map.getIlk(point).isPassable()&&!nodes.contains(point)) {
+			if (map.getIlk(point).isPassable() && !nodes.contains(point)) {
 				toReturn.add(branch(point));
 			}
 		}
@@ -49,7 +48,7 @@ public final class Path {
 	}
 
 	private Path branch(Point p) {
-		Path toReturn = new Path(map,(ArrayList<Point>) ((ArrayList)nodes).clone());
+		Path toReturn = new Path(map, nodes);
 		toReturn.addPoint(p);
 		return toReturn;
 	}
