@@ -4,12 +4,6 @@ package com.prealpha.aichallenge.protocol;
  * Represents a tile of the game map.
  */
 public final class Point {
-	public static Point bounds;
-
-	public static void setBounds(Point p) {
-		bounds = p;
-	}
-
 	private final int row;
 
 	private final int col;
@@ -45,17 +39,11 @@ public final class Point {
 		return col;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public int hashCode() {
 		return row * Game.MAX_MAP_SIZE + col;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public boolean equals(Object o) {
 		boolean result = false;
@@ -66,9 +54,6 @@ public final class Point {
 		return result;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public String toString() {
 		return "(" + row + ", " + col + ")";
