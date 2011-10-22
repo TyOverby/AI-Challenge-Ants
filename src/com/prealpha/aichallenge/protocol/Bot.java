@@ -6,7 +6,7 @@ package com.prealpha.aichallenge.protocol;
 public abstract class Bot extends AbstractSystemInputParser {
 	private Game game;
 
-	private Map map;
+	private GameMap map;
 
 	protected Bot() {
 	}
@@ -17,7 +17,7 @@ public abstract class Bot extends AbstractSystemInputParser {
 	@Override
 	protected final void setup(int loadTime, int turnTime, int rows, int cols,
 			int turns, int viewRadius2, int attackRadius2, int spawnRadius2) {
-		map = new Map(rows, cols);
+		map = new GameMap(rows, cols);
 		game = new Game(map, loadTime, turnTime, turns, viewRadius2,
 				attackRadius2, spawnRadius2);
 	}
@@ -36,7 +36,7 @@ public abstract class Bot extends AbstractSystemInputParser {
 	 * 
 	 * @return the game map
 	 */
-	protected final Map getMap() {
+	protected final GameMap getMap() {
 		return map;
 	}
 

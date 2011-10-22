@@ -1,5 +1,5 @@
 /*
- * Map.java
+ * GameMap.java
  * Copyright (C) 2011 Meyer Kizner
  * All rights reserved.
  */
@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public final class Map {
+public final class GameMap {
 	private final int rows;
 
 	private final int cols;
@@ -31,7 +31,7 @@ public final class Map {
 	private final Set<Point> foodTiles = new HashSet<Point>();
 
 	/**
-	 * Creates a new {@code Map} with the specified dimensions. All tiles are
+	 * Creates a new {@code GameMap} with the specified dimensions. All tiles are
 	 * initially assumed to be land.
 	 * 
 	 * @param rows
@@ -39,7 +39,7 @@ public final class Map {
 	 * @param cols
 	 *            game map width
 	 */
-	Map(int rows, int cols) {
+	GameMap(int rows, int cols) {
 		this.rows = rows;
 		this.cols = cols;
 		ilk = new Ilk[rows][cols];
