@@ -22,7 +22,8 @@ public class AStarAgent {
 		paths = new PriorityQueue<Path>(1, new Comparator<Path>() {
 			@Override
 			public int compare(Path p1, Path p2) {
-				return (int) (p1.getTotalDist(end) - p2.getTotalDist(end));
+				return (int) Math.round(p1.getTotalDist(end)
+						- p2.getTotalDist(end));
 			}
 		});
 
@@ -30,7 +31,7 @@ public class AStarAgent {
 		exploredPoints.add(this.start);
 	}
 
-	public Path findCurrentMin() {
+	Path findCurrentMin() {
 		return paths.peek();
 	}
 
@@ -45,12 +46,9 @@ public class AStarAgent {
 	}
 
 	public Path getSmallestPath() {
-		advance();
-		Path minPath = findCurrentMin();
-		if (minPath.getHead().equals(end)) {
-			return minPath;
-		} else {
-			return getSmallestPath();
+		while (!findCurrentMin().getHead().equals(end)) {
+			advance();
 		}
+		return findCurrentMin();
 	}
 }

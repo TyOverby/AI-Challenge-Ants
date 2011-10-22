@@ -35,15 +35,12 @@ public final class Path {
 	public Set<Path> getNewPathsFromHead(Set<Point> explored) {
 		Set<Path> toReturn = new HashSet<Path>();
 
-		Point curNode = this.getHead();
-		Set<Point> newPoints = map.getAdjacent(curNode);
-
-		for (Point p : newPoints) {
-			if(!nodes.contains(p)){
-				toReturn.add(branch(p));
+		Set<Point> adjacent = map.getAdjacent(getHead());
+		for (Point point : adjacent) {
+			if (map.getIlk(point).isPassable()&&!nodes.contains(point)) {
+				toReturn.add(branch(point));
 			}
 		}
-
 		return toReturn;
 	}
 
@@ -62,7 +59,9 @@ public final class Path {
 	}
 
 	public double getEstimatedRemainingDistance(Point endPoint) {
-		return map.getDistance(nodes.get(nodes.size() - 1), endPoint);
+		Point turn = new Point(getHead().getRow(), endPoint.getCol());
+		return map.getDistance(getHead(), turn)
+				+ map.getDistance(turn, endPoint);
 	}
 
 	public double getTotalDist(Point endPoint) {
@@ -109,10 +108,10 @@ public final class Path {
 
 	@Override
 	public String toString() {
-		String toReturn = "";
+		String toReturn = "{";
 		for (Point point : nodes) {
 			toReturn += String.format("%s, ", point);
 		}
-		return toReturn.trim().substring(0, toReturn.length() - 2);
+		return toReturn.trim().substring(0, toReturn.length() - 2) + "}";
 	}
 }
