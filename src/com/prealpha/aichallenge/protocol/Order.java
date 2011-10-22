@@ -18,9 +18,9 @@ public class Order {
 	 * @param direction
 	 *            direction in which to move my ant
 	 */
-	public Order(Tile tile, Aim direction) {
-		row = tile.getRow();
-		col = tile.getCol();
+	public Order(Point tile, Aim direction) {
+		row = tile.getX();
+		col = tile.getY();
 		this.direction = direction.getSymbol();
 	}
 

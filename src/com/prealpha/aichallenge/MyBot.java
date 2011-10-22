@@ -1,43 +1,42 @@
 package com.prealpha.aichallenge;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.prealpha.aichallenge.protocol.Aim;
-import com.prealpha.aichallenge.protocol.Ants;
+import com.prealpha.aichallenge.core.AntAI;
 import com.prealpha.aichallenge.protocol.Bot;
-import com.prealpha.aichallenge.protocol.Tile;
+import com.prealpha.aichallenge.protocol.GameMap;
 
 /**
  * Starter bot implementation.
  */
 public class MyBot extends Bot {
-	/**
-	 * Main method executed by the game engine for starting the bot.
-	 * 
-	 * @param args
-	 *            command line arguments
-	 * 
-	 * @throws IOException
-	 *             if an I/O error occurs
-	 */
-	public static void main(String[] args) throws IOException {
-		new MyBot().readSystemInput();
+	// We need the game map public to make sure that we can access it from all of our other
+	// methods and classes
+	private static GameMap gm;
+	public static GameMap getGm(){
+		return gm;
 	}
+	
+	private final List<AntAI> ants = new ArrayList<AntAI>(100);
 
-	/**
-	 * For every ant check every direction in fixed order (N, E, S, W) and move
-	 * it if the tile is passable.
-	 */
+	
+
 	@Override
-	public void doTurn() {
-		Ants ants = getAnts();
-		for (Tile myAnt : ants.getMyAnts()) {
-			for (Aim direction : Aim.values()) {
-				if (ants.getIlk(myAnt, direction).isPassable()) {
-					ants.issueOrder(myAnt, direction);
-					break;
-				}
-			}
+	public  void doTurn() {
+		gm = getGameMap();
+		for(AntAI ant:ants){
+			ant.update();
 		}
+	}
+	
+	
+	public void removeAntAI(AntAI ant){
+		ants.remove(ant);
+	}
+	
+	public static void main(String... args) throws IOException {
+		new MyBot().readSystemInput();
 	}
 }

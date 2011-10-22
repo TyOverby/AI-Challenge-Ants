@@ -45,7 +45,7 @@ public enum Aim {
 	 * 
 	 * @return rows delta.
 	 */
-	public int getRowDelta() {
+	public int getYDelta() {
 		return rowDelta;
 	}
 
@@ -54,7 +54,7 @@ public enum Aim {
 	 * 
 	 * @return columns delta.
 	 */
-	public int getColDelta() {
+	public int getXDelta() {
 		return colDelta;
 	}
 
