@@ -1,30 +1,26 @@
 package com.prealpha.aichallenge.protocol;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
- * Represents a location of the game map.
+ * Represents a tile of the game map.
  */
 public class Point {
-	public static Point dimensions;
-	public static void setDims(Point dim){
-		Point.dimensions = dim;
+	public static Point bounds;
+	public static void setBounds(Point p){
+		bounds = p;
 	}
 	
-    private final int y;
-    
-    private final int x;
+    private final int row;
+    private final int col;
     
     /**
-     * Creates new {@link Point} object.
+     * Creates new {@link Tile} object.
      * 
      * @param row row index
      * @param col column index
      */
     public Point(int row, int col) {
-        this.y = row;
-        this.x = col;
+        this.row = row;
+        this.col = col;
     }
     
     /**
@@ -32,8 +28,8 @@ public class Point {
      * 
      * @return row index
      */
-    public int getY() {
-        return this.y;
+    public int getRow() {
+        return row;
     }
     
     /**
@@ -41,23 +37,8 @@ public class Point {
      * 
      * @return column index
      */
-    public int getX() {
-        return this.x;
-    }
-    
-    public Point getPosFromAim(Aim aim){
-    	int newX = this.x+aim.getXDelta();
-    	int newY = this.y+aim.getYDelta();
-    	return new Point(newX,newY);
-    }
-    
-    public Set<Point> getPossiblePoints(){
-    	Set<Point> toReturn = new HashSet<Point>();
-    	
-    	for(Aim a:Aim.values()){
-    		toReturn.add(getPosFromAim(a));
-    	}
-    	return toReturn;
+    public int getCol() {
+        return col;
     }
     
     /**
@@ -65,7 +46,7 @@ public class Point {
      */
     @Override
     public int hashCode() {
-        return y * GameMap.MAX_MAP_SIZE + x;
+        return row * GameMap.MAX_MAP_SIZE + col;
     }
     
     /**
@@ -75,8 +56,8 @@ public class Point {
     public boolean equals(Object o) {
         boolean result = false;
         if (o instanceof Point) {
-            Point tile = (Point)o;
-            result = y == tile.y && x == tile.x;
+        	Point tile = (Point)o;
+            result = row == tile.row && col == tile.col;
         }
         return result;
     }
@@ -86,13 +67,6 @@ public class Point {
      */
     @Override
     public String toString() {
-        return "("+ y + "," + x+")";
+        return row + " " + col;
     }
-
-	public static float distance(Point point, Point destination) {
-		int deltaX = point.x-destination.x;
-		int deltaY = point.y-destination.y;
-		
-		return (float) Math.sqrt(Math.abs(deltaX*deltaX+deltaY*deltaY));
-	}
 }

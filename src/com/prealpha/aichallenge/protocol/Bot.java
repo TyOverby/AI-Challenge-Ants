@@ -4,6 +4,7 @@ package com.prealpha.aichallenge.protocol;
  * Provides basic game state handling.
  */
 public abstract class Bot extends AbstractSystemInputParser {
+
 	private GameMap gameMap;
 
 	/**
@@ -31,8 +32,8 @@ public abstract class Bot extends AbstractSystemInputParser {
 	 * @param ants
 	 *            game state information to be set
 	 */
-	protected void setAnts(GameMap ants) {
-		this.gameMap = ants;
+	protected void setAnts(GameMap gameMap) {
+		this.gameMap = gameMap;
 	}
 
 	/**

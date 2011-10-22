@@ -46,7 +46,7 @@ public class GameMap {
 	private final Set<Order> orders = new HashSet<Order>();
 
 	/**
-	 * Creates new {@link Ants} object.
+	 * Creates new {@link GameMap} object.
 	 * 
 	 * @param loadTime
 	 *            timeout for initializing and setting up the bot on turn 0
@@ -76,7 +76,7 @@ public class GameMap {
 		this.attackRadius2 = attackRadius2;
 		this.spawnRadius2 = spawnRadius2;
 		map = new Ilk[rows][cols];
-		Point.setDims(new Point(rows,cols));
+		Point.setBounds(new Point(rows,cols));
 		for (Ilk[] row : map) {
 			Arrays.fill(row, Ilk.LAND);
 		}
@@ -184,7 +184,7 @@ public class GameMap {
 	 * @return ilk at the <cod>tile</code>
 	 */
 	public Ilk getIlk(Point tile) {
-		return map[tile.getX()][tile.getY()];
+		return map[tile.getRow()][tile.getCol()];
 	}
 
 	/**
@@ -196,7 +196,7 @@ public class GameMap {
 	 *            ilk to be set at <code>tile</code>
 	 */
 	public void setIlk(Point tile, Ilk ilk) {
-		map[tile.getX()][tile.getY()] = ilk;
+		map[tile.getRow()][tile.getCol()] = ilk;
 	}
 
 	/**
@@ -213,7 +213,7 @@ public class GameMap {
 	 */
 	public Ilk getIlk(Point tile, Aim direction) {
 		Point newTile = getTile(tile, direction);
-		return map[newTile.getX()][newTile.getY()];
+		return map[newTile.getRow()][newTile.getCol()];
 	}
 
 	/**
@@ -227,11 +227,13 @@ public class GameMap {
 	 * @return location in <code>direction</code> from <cod>tile</code>
 	 */
 	public Point getTile(Point tile, Aim direction) {
-		int row = (tile.getX() + direction.getXDelta()) % rows;
+
+		int row = (tile.getRow() + direction.getRowDelta()) % rows;
+
 		if (row < 0) {
 			row += rows;
 		}
-		int col = (tile.getY() + direction.getYDelta()) % cols;
+		int col = (tile.getCol() + direction.getColDelta()) % cols;
 		if (col < 0) {
 			col += cols;
 		}
@@ -303,8 +305,9 @@ public class GameMap {
 	 * @return distance between <code>t1</code> and <code>t2</code>
 	 */
 	public int getDistance(Point t1, Point t2) {
-		int rowDelta = Math.abs(t1.getX() - t2.getX());
-		int colDelta = Math.abs(t1.getY() - t2.getY());
+		int rowDelta = Math.abs(t1.getRow() - t2.getRow());
+		int colDelta = Math.abs(t1.getCol() - t2.getCol());
+
 		rowDelta = Math.min(rowDelta, rows - rowDelta);
 		colDelta = Math.min(colDelta, cols - colDelta);
 		return rowDelta * rowDelta + colDelta * colDelta;
@@ -322,34 +325,35 @@ public class GameMap {
 	 * @return orthogonal directions from <code>t1</code> to <code>t2</code>
 	 */
 	public List<Aim> getDirections(Point t1, Point t2) {
-		List<Aim> directions = new ArrayList<Aim>();
-		if (t1.getX() < t2.getX()) {
-			if (t2.getX() - t1.getX() >= rows / 2) {
-				directions.add(Aim.NORTH);
-			} else {
-				directions.add(Aim.SOUTH);
-			}
-		} else if (t1.getX() > t2.getX()) {
-			if (t1.getX() - t2.getX() >= rows / 2) {
-				directions.add(Aim.SOUTH);
-			} else {
-				directions.add(Aim.NORTH);
-			}
-		}
-		if (t1.getY() < t2.getY()) {
-			if (t2.getY() - t1.getY() >= cols / 2) {
-				directions.add(Aim.WEST);
-			} else {
-				directions.add(Aim.EAST);
-			}
-		} else if (t1.getY() > t2.getY()) {
-			if (t1.getY() - t2.getY() >= cols / 2) {
-				directions.add(Aim.EAST);
-			} else {
-				directions.add(Aim.WEST);
-			}
-		}
-		return directions;
+        List<Aim> directions = new ArrayList<Aim>();
+        if (t1.getRow() < t2.getRow()) {
+            if (t2.getRow() - t1.getRow() >= rows / 2) {
+                directions.add(Aim.NORTH);
+            } else {
+                directions.add(Aim.SOUTH);
+            }
+        } else if (t1.getRow() > t2.getRow()) {
+            if (t1.getRow() - t2.getRow() >= rows / 2) {
+                directions.add(Aim.SOUTH);
+            } else {
+                directions.add(Aim.NORTH);
+            }
+        }
+        if (t1.getCol() < t2.getCol()) {
+            if (t2.getCol() - t1.getCol() >= cols / 2) {
+                directions.add(Aim.WEST);
+            } else {
+                directions.add(Aim.EAST);
+            }
+        } else if (t1.getCol() > t2.getCol()) {
+            if (t1.getCol() - t2.getCol() >= cols / 2) {
+                directions.add(Aim.EAST);
+            } else {
+                directions.add(Aim.WEST);
+            }
+        }
+        return directions;
+
 	}
 
 	/**
@@ -357,7 +361,7 @@ public class GameMap {
 	 */
 	public void clearMyAnts() {
 		for (Point myAnt : myAnts) {
-			map[myAnt.getX()][myAnt.getY()] = Ilk.LAND;
+			map[myAnt.getRow()][myAnt.getCol()] = Ilk.LAND;
 		}
 		myAnts.clear();
 	}
@@ -367,7 +371,7 @@ public class GameMap {
 	 */
 	public void clearEnemyAnts() {
 		for (Point enemyAnt : enemyAnts) {
-			map[enemyAnt.getX()][enemyAnt.getY()] = Ilk.LAND;
+			map[enemyAnt.getRow()][enemyAnt.getCol()] = Ilk.LAND;
 		}
 		enemyAnts.clear();
 	}
@@ -395,7 +399,8 @@ public class GameMap {
 	 *            location on the game map to be updated
 	 */
 	public void update(Ilk ilk, Point tile) {
-		map[tile.getX()][tile.getY()] = ilk;
+		map[tile.getRow()][tile.getCol()] = ilk;
+
 		switch (ilk) {
 		case FOOD:
 			foodTiles.add(tile);
