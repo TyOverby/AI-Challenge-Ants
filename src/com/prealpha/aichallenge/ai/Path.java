@@ -107,10 +107,10 @@ public final class Path {
 
 	@Override
 	public String toString() {
-		String toReturn = "";
+		String toReturn = "{";
 		for (Point point : nodes) {
 			toReturn += String.format("%s, ", point);
 		}
-		return toReturn.trim().substring(0, toReturn.length() - 2);
+		return toReturn.trim().substring(0, toReturn.length() - 2) + "}";
 	}
 }
