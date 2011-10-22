@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.prealpha.aichallenge.protocol.Map;
+import com.prealpha.aichallenge.protocol.GameMap;
 import com.prealpha.aichallenge.protocol.Point;
 
 public class AStarAgent {
@@ -15,7 +15,7 @@ public class AStarAgent {
 
 	private final Set<Point> exploredPoints = new HashSet<Point>();
 
-	public AStarAgent(Map map,Point start, Point end) {
+	public AStarAgent(GameMap map,Point start, Point end) {
 		this.start = start;
 		this.end = end;
 
