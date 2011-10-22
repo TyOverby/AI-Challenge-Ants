@@ -12,7 +12,7 @@ import com.prealpha.aichallenge.protocol.Point;
 public class AStarAgent {
 	private final Point start, end;
 
-	private final Queue<Path> paths;
+	public final Queue<Path> paths;
 
 	private final Set<Point> exploredPoints = new HashSet<Point>();
 
@@ -36,8 +36,11 @@ public class AStarAgent {
 
 	void advance() {
 		Path minPath = findCurrentMin();
+		
+		Set<Path> newPaths = minPath.getNewPathsFromHead(exploredPoints);
+		
 		// Add all of its children
-		paths.addAll(minPath.getNewPathsFromHead());
+		paths.addAll(newPaths);
 		paths.remove(minPath);
 	}
 

@@ -18,7 +18,7 @@ public class AStarTest {
 
 	@Before
 	public void setUp() throws InstantiationException, IllegalAccessException,
-			InvocationTargetException {
+	InvocationTargetException {
 		// since I don't want to make this constructor public
 		Constructor<?> constructor = GameMap.class.getDeclaredConstructors()[0];
 		constructor.setAccessible(true);
@@ -73,5 +73,10 @@ public class AStarTest {
 		AStarAgent agent = new AStarAgent(map, start, end);
 
 		System.out.println(agent.getSmallestPath().toString());
+
+		int i =0;
+//		for(Path p:agent.paths){
+//			System.out.println(i++ +":\t"+p.toString());
+//		}
 	}
 }

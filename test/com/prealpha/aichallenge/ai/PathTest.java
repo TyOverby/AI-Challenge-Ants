@@ -89,6 +89,6 @@ public final class PathTest {
 		newPaths.add(new Path(map, start, new Point(1, 0)));
 		newPaths.add(new Path(map, start, new Point(ROWS - 1, 0)));
 
-		assertEquals(newPaths, curPath.getNewPathsFromHead());
+		assertEquals(newPaths, curPath.getNewPathsFromHead(new HashSet<Point>()));
 	}
 }
