@@ -4,17 +4,22 @@ package com.prealpha.aichallenge.protocol;
  * Provides basic game state handling.
  */
 public abstract class Bot extends AbstractSystemInputParser {
+	private Game game;
 
-	private GameMap gameMap;
+	private Map map;
+
+	protected Bot() {
+	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setup(int loadTime, int turnTime, int rows, int cols,
+	protected final void setup(int loadTime, int turnTime, int rows, int cols,
 			int turns, int viewRadius2, int attackRadius2, int spawnRadius2) {
-		setAnts(new GameMap(loadTime, turnTime, rows, cols, turns, viewRadius2,
-				attackRadius2, spawnRadius2));
+		map = new Map(rows, cols);
+		game = new Game(map, loadTime, turnTime, turns, viewRadius2,
+				attackRadius2, spawnRadius2);
 	}
 
 	/**
@@ -22,78 +27,56 @@ public abstract class Bot extends AbstractSystemInputParser {
 	 * 
 	 * @return game state information
 	 */
-	public GameMap getGameMap() {
-		return gameMap;
+	protected final Game getGame() {
+		return game;
 	}
 
 	/**
-	 * Sets game state information.
+	 * Returns the game map.
 	 * 
-	 * @param ants
-	 *            game state information to be set
+	 * @return the game map
 	 */
-	protected void setAnts(GameMap gameMap) {
-		this.gameMap = gameMap;
+	protected final Map getMap() {
+		return map;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void beforeUpdate() {
-		gameMap.setTurnStartTime(System.currentTimeMillis());
-		gameMap.clearMyAnts();
-		gameMap.clearEnemyAnts();
-		gameMap.clearMyHills();
-		gameMap.clearEnemyHills();
-		gameMap.getFoodTiles().clear();
-		gameMap.getOrders().clear();
+	protected void beforeUpdate() {
+		game.setTurnStartTime(System.currentTimeMillis());
+		game.clearOrders();
+		map.clearMyAnts();
+		map.clearEnemyAnts();
+		map.clearMyHills();
+		map.clearEnemyHills();
+		map.clearFoodTiles();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void addWater(int row, int col) {
-		gameMap.update(Ilk.WATER, new Point(row, col));
+	protected void addWater(int row, int col) {
+		map.update(new Point(row, col), Ilk.WATER);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void addAnt(int row, int col, int owner) {
-		gameMap.update(owner > 0 ? Ilk.ENEMY_ANT : Ilk.MY_ANT, new Point(row, col));
+	protected void addAnt(int row, int col, int owner) {
+		map.update(new Point(row, col), owner > 0 ? Ilk.ENEMY_ANT : Ilk.MY_ANT);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void addFood(int row, int col) {
-		gameMap.update(Ilk.FOOD, new Point(row, col));
+	protected void addFood(int row, int col) {
+		map.update(new Point(row, col), Ilk.FOOD);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void removeAnt(int row, int col, int owner) {
-		gameMap.update(Ilk.DEAD, new Point(row, col));
+	protected void removeAnt(int row, int col, int owner) {
+		map.update(new Point(row, col), Ilk.DEAD);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void addHill(int row, int col, int owner) {
-		gameMap.updateHills(owner, new Point(row, col));
+	protected void addHill(int row, int col, int owner) {
+		map.updateHills(new Point(row, col), owner);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void afterUpdate() {
+	protected void afterUpdate() {
 	}
 }
