@@ -4,17 +4,23 @@ import static org.junit.Assert.*;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import com.prealpha.aichallenge.protocol.GameMap;
+import com.prealpha.aichallenge.protocol.Ilk;
 import com.prealpha.aichallenge.protocol.Point;
 
 public class AStarTest {
 	private static final int ROWS = 20;
+
 	private static final int COLS = 20;
+
 	private GameMap map;
+
+	private GameMap obstacleMap;
 
 	@Before
 	public void setUp() throws InstantiationException, IllegalAccessException,
@@ -23,6 +29,15 @@ public class AStarTest {
 		Constructor<?> constructor = GameMap.class.getDeclaredConstructors()[0];
 		constructor.setAccessible(true);
 		map = (GameMap) constructor.newInstance(ROWS, COLS);
+		obstacleMap = (GameMap) constructor.newInstance(ROWS, COLS);
+
+		for (Method method : GameMap.class.getDeclaredMethods()) {
+			if (method.getName().equals("update")) {
+				method.setAccessible(true);
+				method.invoke(obstacleMap, new Point(5, 4), Ilk.WATER);
+				method.invoke(obstacleMap, new Point(4, 5), Ilk.WATER);
+			}
+		}
 	}
 
 	/**
@@ -69,9 +84,17 @@ public class AStarTest {
 	public void testEntire() {
 		Point start = new Point(0, 0);
 		Point end = new Point(5, 5);
-
 		AStarAgent agent = new AStarAgent(map, start, end);
+		Path path = agent.getSmallestPath();
+		assertEquals(10, path.getTotalDist(end), 0.001);
+	}
 
-		System.out.println(agent.getSmallestPath().toString());
+	@Test
+	public void testEntireWithObstacles() {
+		Point start = new Point(0, 0);
+		Point end = new Point(5, 5);
+		AStarAgent agent = new AStarAgent(obstacleMap, start, end);
+		Path path = agent.getSmallestPath();
+		assertEquals(12, path.getTotalDist(end), 0.001);
 	}
 }
