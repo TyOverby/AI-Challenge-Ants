@@ -12,22 +12,22 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.prealpha.aichallenge.protocol.Map;
+import com.prealpha.aichallenge.protocol.GameMap;
 import com.prealpha.aichallenge.protocol.Point;
 
 public final class PathTest {
 	private static final int ROWS = 20;
 	private static final int COLS = 20;
 
-	private Map map;
+	private GameMap map;
 
 	@Before
 	public void setUp() throws InstantiationException, IllegalAccessException,
 			InvocationTargetException {
 		// since I don't want to make this constructor public
-		Constructor<?> constructor = Map.class.getDeclaredConstructors()[0];
+		Constructor<?> constructor = GameMap.class.getDeclaredConstructors()[0];
 		constructor.setAccessible(true);
-		map = (Map) constructor.newInstance(ROWS, COLS);
+		map = (GameMap) constructor.newInstance(ROWS, COLS);
 	}
 
 	@Test

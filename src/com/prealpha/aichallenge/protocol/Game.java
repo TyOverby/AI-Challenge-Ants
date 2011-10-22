@@ -13,7 +13,7 @@ public final class Game {
 	 */
 	public static final int MAX_MAP_SIZE = 256;
 
-	private final Map map;
+	private final GameMap map;
 
 	private final int loadTime;
 
@@ -49,7 +49,7 @@ public final class Game {
 	 * @param spawnRadius2
 	 *            squared spawn radius of each ant
 	 */
-	Game(Map map, int loadTime, int turnTime, int turns, int viewRadius2,
+	Game(GameMap map, int loadTime, int turnTime, int turns, int viewRadius2,
 			int attackRadius2, int spawnRadius2) {
 		this.map = map;
 		this.loadTime = loadTime;
@@ -65,7 +65,7 @@ public final class Game {
 	 * 
 	 * @return the game map
 	 */
-	public Map getMap() {
+	public GameMap getMap() {
 		return map;
 	}
 

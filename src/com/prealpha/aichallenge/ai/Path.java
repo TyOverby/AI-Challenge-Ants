@@ -7,23 +7,23 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.prealpha.aichallenge.protocol.Map;
+import com.prealpha.aichallenge.protocol.GameMap;
 import com.prealpha.aichallenge.protocol.Point;
 
 public final class Path {
-	private final Map map;
+	private final GameMap map;
 
 	private final List<Point> nodes;
 
-	public Path(Map map, Point startingNode) {
+	public Path(GameMap map, Point startingNode) {
 		this(map, Collections.singletonList(startingNode));
 	}
 
-	Path(Map map, Point... nodes) {
+	Path(GameMap map, Point... nodes) {
 		this(map, Arrays.asList(nodes));
 	}
 
-	public Path(Map map, List<Point> nodes) {
+	public Path(GameMap map, List<Point> nodes) {
 		this.map = map;
 		this.nodes = new ArrayList<Point>(nodes);
 	}

@@ -25,7 +25,7 @@ public final class Order {
 		return point;
 	}
 
-	public Point getTarget(Map map) {
+	public Point getTarget(GameMap map) {
 		return map.getPoint(point, direction);
 	}
 
