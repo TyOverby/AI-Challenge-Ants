@@ -8,8 +8,7 @@ import java.util.regex.Pattern;
 /**
  * Handles system input stream parsing.
  */
-public abstract class AbstractSystemInputParser extends
-		AbstractSystemInputReader {
+abstract class AbstractSystemInputParser extends AbstractSystemInputReader {
 	private static final String READY = "ready";
 
 	private static final String GO = "go";
@@ -42,12 +41,15 @@ public abstract class AbstractSystemInputParser extends
 		return Pattern.compile(builder.toString());
 	}
 
+	protected AbstractSystemInputParser() {
+	}
+
 	/**
 	 * Collects lines read from system input stream until a keyword appears and
 	 * then parses them.
 	 */
 	@Override
-	public void processLine(String line) {
+	void processLine(String line) {
 		if (line.equals(READY)) {
 			parseSetup(input);
 			doTurn();
@@ -69,7 +71,7 @@ public abstract class AbstractSystemInputParser extends
 	 * @param input
 	 *            setup information
 	 */
-	public void parseSetup(List<String> input) {
+	private void parseSetup(List<String> input) {
 		int loadTime = 0;
 		int turnTime = 0;
 		int rows = 0;
@@ -129,7 +131,7 @@ public abstract class AbstractSystemInputParser extends
 	 * @param input
 	 *            update information
 	 */
-	public void parseUpdate(List<String> input) {
+	private void parseUpdate(List<String> input) {
 		beforeUpdate();
 		for (String line : input) {
 			line = removeComment(line);
@@ -194,14 +196,15 @@ public abstract class AbstractSystemInputParser extends
 	 * @param spawnRadius2
 	 *            squared spawn radius of each ant
 	 */
-	public abstract void setup(int loadTime, int turnTime, int rows, int cols,
-			int turns, int viewRadius2, int attackRadius2, int spawnRadius2);
+	protected abstract void setup(int loadTime, int turnTime, int rows,
+			int cols, int turns, int viewRadius2, int attackRadius2,
+			int spawnRadius2);
 
 	/**
 	 * Enables performing actions which should take place prior to updating the
 	 * game state, like clearing old game data.
 	 */
-	public abstract void beforeUpdate();
+	protected abstract void beforeUpdate();
 
 	/**
 	 * Adds new water tile.
@@ -211,7 +214,7 @@ public abstract class AbstractSystemInputParser extends
 	 * @param col
 	 *            column index
 	 */
-	public abstract void addWater(int row, int col);
+	protected abstract void addWater(int row, int col);
 
 	/**
 	 * Adds new ant tile.
@@ -223,7 +226,7 @@ public abstract class AbstractSystemInputParser extends
 	 * @param owner
 	 *            player id
 	 */
-	public abstract void addAnt(int row, int col, int owner);
+	protected abstract void addAnt(int row, int col, int owner);
 
 	/**
 	 * Adds new food tile.
@@ -233,7 +236,7 @@ public abstract class AbstractSystemInputParser extends
 	 * @param col
 	 *            column index
 	 */
-	public abstract void addFood(int row, int col);
+	protected abstract void addFood(int row, int col);
 
 	/**
 	 * Removes dead ant tile.
@@ -245,7 +248,7 @@ public abstract class AbstractSystemInputParser extends
 	 * @param owner
 	 *            player id
 	 */
-	public abstract void removeAnt(int row, int col, int owner);
+	protected abstract void removeAnt(int row, int col, int owner);
 
 	/**
 	 * Adds new hill tile.
@@ -257,24 +260,24 @@ public abstract class AbstractSystemInputParser extends
 	 * @param owner
 	 *            player id
 	 */
-	public abstract void addHill(int row, int col, int owner);
+	protected abstract void addHill(int row, int col, int owner);
 
 	/**
 	 * Enables performing actions which should take place just after the game
 	 * state has been updated.
 	 */
-	public abstract void afterUpdate();
+	protected abstract void afterUpdate();
 
 	/**
 	 * Subclasses are supposed to use this method to process the game state and
 	 * send orders.
 	 */
-	public abstract void doTurn();
+	protected abstract void doTurn();
 
 	/**
 	 * Finishes turn.
 	 */
-	public void finishTurn() {
+	protected final void finishTurn() {
 		System.out.println("go");
 		System.out.flush();
 	}

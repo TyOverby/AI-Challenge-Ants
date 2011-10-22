@@ -30,7 +30,7 @@ public enum Ilk {
 	 *         otherwise
 	 */
 	public boolean isPassable() {
-		return ordinal() > WATER.ordinal();
+		return (this != WATER);
 	}
 
 	/**
@@ -41,6 +41,6 @@ public enum Ilk {
 	 *         <code>false</code> otherwise
 	 */
 	public boolean isUnoccupied() {
-		return this == LAND || this == DEAD;
+		return (this == LAND || this == DEAD);
 	}
 }

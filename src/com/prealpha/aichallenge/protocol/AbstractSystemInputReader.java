@@ -5,7 +5,10 @@ import java.io.IOException;
 /**
  * Handles system input stream reading.
  */
-public abstract class AbstractSystemInputReader {
+abstract class AbstractSystemInputReader {
+	protected AbstractSystemInputReader() {
+	}
+
 	/**
 	 * Reads system input stream line by line. All characters are converted to
 	 * lower case and each line is passed for processing to
@@ -14,7 +17,7 @@ public abstract class AbstractSystemInputReader {
 	 * @throws IOException
 	 *             if an I/O error occurs
 	 */
-	public void readSystemInput() throws IOException {
+	protected final void readSystemInput() throws IOException {
 		StringBuilder line = new StringBuilder();
 		int c;
 		while ((c = System.in.read()) >= 0) {
@@ -34,5 +37,5 @@ public abstract class AbstractSystemInputReader {
 	 * @param line
 	 *            single, trimmed line of system input
 	 */
-	public abstract void processLine(String line);
+	abstract void processLine(String line);
 }

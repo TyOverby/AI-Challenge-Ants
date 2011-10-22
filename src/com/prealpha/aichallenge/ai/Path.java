@@ -11,56 +11,59 @@ import com.prealpha.aichallenge.protocol.Point;
 
 public class Path {
 	private List<Point> nodes = new ArrayList<Point>();
-	
-	public Path(Point startingNode){
+
+	public Path(Point startingNode) {
 		this.nodes.add(startingNode);
 	}
-	
-	Path(Point...nodes){
-		this.nodes=Arrays.asList(nodes);
+
+	Path(Point... nodes) {
+		this.nodes = Arrays.asList(nodes);
 	}
-	
-	public Path(List<Point> nodes){
-		this.nodes=nodes;
+
+	public Path(List<Point> nodes) {
+		this.nodes = nodes;
 	}
-	
-	public void addPoint(Point p){
+
+	public void addPoint(Point p) {
 		nodes.add(p);
 	}
-	
-	public Set<Path> getNewPathsFromHead(){
+
+	public Set<Path> getNewPathsFromHead() {
 		Set<Path> toReturn = new HashSet<Path>();
-		
-		Point curNode=this.getHead();
-		
+
+		Point curNode = this.getHead();
+
 		Set<Point> newPoints = curNode.getNeighbors();
-		
-		for(Point p: newPoints){
+
+		for (Point p : newPoints) {
 			toReturn.add(this.branch(p));
 		}
-		
+
 		return null;
 	}
-	
-	public Point getHead(){
-		return nodes.get(nodes.size()-1);
+
+	public Point getHead() {
+		return nodes.get(nodes.size() - 1);
 	}
-	
-	private Path branch(Point p){
+
+	private Path branch(Point p) {
 		@SuppressWarnings("unchecked")
-		Path toReturn = new Path((List<Point>)((ArrayList<Point>)nodes).clone());
+		Path toReturn = new Path(
+				(List<Point>) ((ArrayList<Point>) nodes).clone());
 		toReturn.addPoint(p);
-		
+
 		return toReturn;
 	}
-	
-	public int getTravledDistance(){
-		return nodes.size()-1;
+
+	public int getTravledDistance() {
+		return nodes.size() - 1;
 	}
-	public float getEstimatedRemainingDistance(Point endPoint){
-		return MyBot.getGm().getDistance(nodes.get(nodes.size()-1), endPoint);
+
+	public float getEstimatedRemainingDistance(Point endPoint) {
+		return MyBot.getGm().getDistance(nodes.get(nodes.size() - 1), endPoint);
 	}
-	public float getTotalDist(Point endPoint){
-		return getTravledDistance()+getEstimatedRemainingDistance(endPoint);
+
+	public float getTotalDist(Point endPoint) {
+		return getTravledDistance() + getEstimatedRemainingDistance(endPoint);
 	}
 }
