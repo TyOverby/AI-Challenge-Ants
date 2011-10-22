@@ -1,5 +1,8 @@
 package com.prealpha.aichallenge.protocol;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Represents a tile of the game map.
  */
@@ -21,6 +24,22 @@ public class Point {
     public Point(int row, int col) {
         this.row = row;
         this.col = col;
+    }
+    
+    public Point getModPoint(Aim aim){
+    	int newRow = (this.row+aim.getRowDelta());
+    	int newCol = (this.col+aim.getColDelta());
+    	
+    	return new Point(newRow,newCol);
+    }
+    
+    public Set<Point> getNeighbors(){
+    	Set<Point> toReturn = new HashSet<Point>(4);
+    	for(Aim aim:Aim.values()){
+    		toReturn.add(this.getModPoint(aim));
+    	}    	
+    	
+    	return toReturn;
     }
     
     /**

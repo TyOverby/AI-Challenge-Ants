@@ -28,11 +28,11 @@ public class MyBot extends Bot {
 
 	@Override
 	public void doTurn() {
-		GameMap ants = getGameMap();
-		for (Point myAnt : ants.getMyAnts()) {
+		MyBot.gm = getGameMap();
+		for (Point myAnt : MyBot.gm.getMyAnts()) {
 			for (Aim direction : Aim.values()) {
-				if (ants.getIlk(myAnt, direction).isPassable()) {
-					ants.issueOrder(myAnt, direction);
+				if (MyBot.gm.getIlk(myAnt, direction).isPassable()) {
+					MyBot.gm.issueOrder(myAnt, direction);
 					break;
 				}
 			}
