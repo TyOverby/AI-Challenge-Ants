@@ -11,6 +11,7 @@ public final class Point {
 	}
 
 	private final int row;
+
 	private final int col;
 
 	/**
