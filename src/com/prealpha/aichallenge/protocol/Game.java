@@ -143,6 +143,10 @@ public final class Game {
 		return turnTime - (int) (System.currentTimeMillis() - turnStartTime);
 	}
 
+	public Set<Order> getOrders() {
+		return orders;
+	}
+
 	/**
 	 * Issues an order by sending it to the system output.
 	 * 

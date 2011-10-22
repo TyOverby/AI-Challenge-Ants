@@ -6,6 +6,8 @@ package com.prealpha.aichallenge.protocol;
 public abstract class Bot extends AbstractSystemInputParser {
 	private Game game;
 
+	private Map map;
+
 	protected Bot() {
 	}
 
@@ -15,8 +17,9 @@ public abstract class Bot extends AbstractSystemInputParser {
 	@Override
 	protected final void setup(int loadTime, int turnTime, int rows, int cols,
 			int turns, int viewRadius2, int attackRadius2, int spawnRadius2) {
-		game = new Game(loadTime, turnTime, rows, cols, turns,
-				viewRadius2, attackRadius2, spawnRadius2);
+		map = new Map(rows, cols);
+		game = new Game(map, loadTime, turnTime, turns, viewRadius2,
+				attackRadius2, spawnRadius2);
 	}
 
 	/**
@@ -24,45 +27,53 @@ public abstract class Bot extends AbstractSystemInputParser {
 	 * 
 	 * @return game state information
 	 */
-	protected final Game getGameMap() {
+	protected final Game getGame() {
 		return game;
+	}
+
+	/**
+	 * Returns the game map.
+	 * 
+	 * @return the game map
+	 */
+	protected final Map getMap() {
+		return map;
 	}
 
 	@Override
 	protected void beforeUpdate() {
 		game.setTurnStartTime(System.currentTimeMillis());
-		game.clearMyAnts();
-		game.clearEnemyAnts();
-		game.clearMyHills();
-		game.clearEnemyHills();
-		game.getFoodTiles().clear();
 		game.getOrders().clear();
+		map.clearMyAnts();
+		map.clearEnemyAnts();
+		map.clearMyHills();
+		map.clearEnemyHills();
+		map.getFoodTiles().clear();
 	}
 
 	@Override
 	protected void addWater(int row, int col) {
-		game.update(Ilk.WATER, new Point(row, col));
+		map.update(new Point(row, col), Ilk.WATER);
 	}
 
 	@Override
 	protected void addAnt(int row, int col, int owner) {
-		game.update(owner > 0 ? Ilk.ENEMY_ANT : Ilk.MY_ANT, new Point(row,
-				col));
+		map.update(new Point(row, col), owner > 0 ? Ilk.ENEMY_ANT : Ilk.MY_ANT);
 	}
 
 	@Override
 	protected void addFood(int row, int col) {
-		game.update(Ilk.FOOD, new Point(row, col));
+		map.update(new Point(row, col), Ilk.FOOD);
 	}
 
 	@Override
 	protected void removeAnt(int row, int col, int owner) {
-		game.update(Ilk.DEAD, new Point(row, col));
+		map.update(new Point(row, col), Ilk.DEAD);
 	}
 
 	@Override
 	protected void addHill(int row, int col, int owner) {
-		game.updateHills(owner, new Point(row, col));
+		map.updateHills(new Point(row, col), owner);
 	}
 
 	@Override
