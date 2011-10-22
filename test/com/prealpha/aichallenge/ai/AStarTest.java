@@ -58,22 +58,14 @@ public final class AStarTest {
 	public void testAdvanceOne() {
 		Point start = new Point(0, 0);
 		Point end = new Point(5, 0);
-
 		AStarAgent agent = new AStarAgent(map, start, end);
-
-		agent.advance();
-		Path curMin = agent.findCurrentMin();
-
-		Path shouldPath = new Path(map, start);
-		shouldPath.addPoint(new Point(1, 0));
-
-		assertEquals(shouldPath, curMin);
-
-		agent.advance();
-		curMin = agent.findCurrentMin();
-		shouldPath.addPoint(new Point(2, 0));
-
-		assertEquals(shouldPath, curMin);
+		Path expected = new Path(map, start);
+		assertEquals(expected, agent.findCurrentMin());
+		for (int i = 1; i <= 5; i++) {
+			expected = expected.branch(new Point(i, 0));
+			agent.advance();
+			assertEquals(expected, agent.findCurrentMin());
+		}
 	}
 
 	@Test
@@ -82,7 +74,7 @@ public final class AStarTest {
 		Point end = new Point(5, 5);
 		AStarAgent agent = new AStarAgent(map, start, end);
 		Path path = agent.getSmallestPath();
-		assertEquals(10, path.getTotalDist(end), 0.001);
+		assertEquals(10, path.getTotalDistance(end), 0.001);
 	}
 
 	@Test
@@ -91,6 +83,6 @@ public final class AStarTest {
 		Point end = new Point(5, 5);
 		AStarAgent agent = new AStarAgent(obstacleMap, start, end);
 		Path path = agent.getSmallestPath();
-		assertEquals(12, path.getTotalDist(end), 0.001);
+		assertEquals(12, path.getTotalDistance(end), 0.001);
 	}
 }

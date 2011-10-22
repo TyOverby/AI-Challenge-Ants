@@ -2,7 +2,6 @@ package com.prealpha.aichallenge.ai;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,10 +14,6 @@ public final class Path {
 
 	private final List<Point> nodes;
 
-	public Path(GameMap map, Point startingNode) {
-		this(map, Collections.singletonList(startingNode));
-	}
-
 	public Path(GameMap map, Point... nodes) {
 		this(map, Arrays.asList(nodes));
 	}
@@ -28,11 +23,7 @@ public final class Path {
 		this.nodes = new ArrayList<Point>(nodes);
 	}
 
-	public void addPoint(Point p) {
-		nodes.add(p);
-	}
-
-	public Set<Path> getNewPathsFromHead() {
+	public Set<Path> getChildren() {
 		Set<Path> toReturn = new HashSet<Path>();
 		Set<Point> adjacent = map.getAdjacent(getHead());
 		for (Point point : adjacent) {
@@ -47,24 +38,27 @@ public final class Path {
 		return nodes.get(nodes.size() - 1);
 	}
 
-	private Path branch(Point p) {
+	public Path branch(Point target) {
+		if (map.getDistance(getHead(), target) != 1.0) {
+			throw new IllegalArgumentException();
+		}
 		Path toReturn = new Path(map, nodes);
-		toReturn.addPoint(p);
+		toReturn.nodes.add(target);
 		return toReturn;
 	}
 
-	public int getTraveledDistance() {
+	public int getLength() {
 		return nodes.size() - 1;
 	}
 
-	public double getEstimatedRemainingDistance(Point endPoint) {
+	public double getHeuristicDistance(Point endPoint) {
 		Point turn = new Point(getHead().getRow(), endPoint.getCol());
 		return map.getDistance(getHead(), turn)
 				+ map.getDistance(turn, endPoint);
 	}
 
-	public double getTotalDist(Point endPoint) {
-		return getTraveledDistance() + getEstimatedRemainingDistance(endPoint);
+	public double getTotalDistance(Point end) {
+		return getLength() + getHeuristicDistance(end);
 	}
 
 	@Override

@@ -8,8 +8,10 @@ import java.util.Set;
 import com.prealpha.aichallenge.protocol.GameMap;
 import com.prealpha.aichallenge.protocol.Point;
 
-public class AStarAgent {
-	private final Point start, end;
+public final class AStarAgent {
+	private final Point start;
+
+	private final Point end;
 
 	private final Queue<Path> paths;
 
@@ -19,11 +21,10 @@ public class AStarAgent {
 		paths = new PriorityQueue<Path>(1, new Comparator<Path>() {
 			@Override
 			public int compare(Path p1, Path p2) {
-				return (int) Math.round(p1.getTotalDist(end)
-						- p2.getTotalDist(end));
+				return (int) Math.round(p1.getTotalDistance(end)
+						- p2.getTotalDistance(end));
 			}
 		});
-
 		paths.add(new Path(map, this.start));
 	}
 
@@ -33,7 +34,7 @@ public class AStarAgent {
 
 	void advance() {
 		Path minPath = findCurrentMin();
-		Set<Path> children = minPath.getNewPathsFromHead();
+		Set<Path> children = minPath.getChildren();
 		paths.addAll(children);
 		paths.remove(minPath);
 	}

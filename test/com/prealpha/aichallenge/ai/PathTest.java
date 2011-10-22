@@ -36,9 +36,9 @@ public final class PathTest {
 		Point end = new Point(0, 5);
 
 		Path path = new Path(map, start);
-		assertEquals(0, path.getTraveledDistance());
-		assertEquals(5, path.getEstimatedRemainingDistance(end), 0.001);
-		assertEquals(5, path.getTotalDist(end), 0.001);
+		assertEquals(0, path.getLength());
+		assertEquals(5, path.getHeuristicDistance(end), 0.001);
+		assertEquals(5, path.getTotalDistance(end), 0.001);
 	}
 
 	@Test
@@ -53,9 +53,9 @@ public final class PathTest {
 
 		Path path = new Path(map, pathset);
 
-		assertEquals(1, path.getTraveledDistance());
-		assertEquals(6, path.getEstimatedRemainingDistance(end), 0.001);
-		assertEquals(7, path.getTotalDist(end), 0.001);
+		assertEquals(1, path.getLength());
+		assertEquals(6, path.getHeuristicDistance(end), 0.001);
+		assertEquals(7, path.getTotalDistance(end), 0.001);
 	}
 
 	@Test
@@ -71,10 +71,7 @@ public final class PathTest {
 	public void testGetHeadTwo() {
 		Point start = new Point(0, 0);
 		Point next = new Point(0, 1);
-
-		Path path = new Path(map, start);
-		path.addPoint(next);
-
+		Path path = new Path(map, start, next);
 		assertEquals(next, path.getHead());
 	}
 
@@ -89,6 +86,6 @@ public final class PathTest {
 		newPaths.add(new Path(map, start, new Point(1, 0)));
 		newPaths.add(new Path(map, start, new Point(ROWS - 1, 0)));
 
-		assertEquals(newPaths, curPath.getNewPathsFromHead());
+		assertEquals(newPaths, curPath.getChildren());
 	}
 }
