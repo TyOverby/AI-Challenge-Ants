@@ -58,7 +58,9 @@ public final class Path {
 	}
 
 	public double getEstimatedRemainingDistance(Point endPoint) {
-		return map.getDistance(nodes.get(nodes.size() - 1), endPoint);
+		Point turn = new Point(getHead().getRow(), endPoint.getCol());
+		return map.getDistance(getHead(), turn)
+				+ map.getDistance(turn, endPoint);
 	}
 
 	public double getTotalDist(Point endPoint) {
