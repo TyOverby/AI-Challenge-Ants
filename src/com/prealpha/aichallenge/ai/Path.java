@@ -34,15 +34,12 @@ public final class Path {
 
 	public Set<Path> getNewPathsFromHead() {
 		Set<Path> toReturn = new HashSet<Path>();
-
-		Point curNode = this.getHead();
-
-		Set<Point> newPoints = map.getAdjacent(curNode);
-
-		for (Point p : newPoints) {
-			toReturn.add(branch(p));
+		Set<Point> adjacent = map.getAdjacent(getHead());
+		for (Point point : adjacent) {
+			if (map.getIlk(point).isPassable()) {
+				toReturn.add(branch(point));
+			}
 		}
-
 		return toReturn;
 	}
 
