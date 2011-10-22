@@ -2,6 +2,11 @@ package com.prealpha.aichallenge;
 
 import java.io.IOException;
 
+import com.prealpha.aichallenge.protocol.Aim;
+import com.prealpha.aichallenge.protocol.Ants;
+import com.prealpha.aichallenge.protocol.Bot;
+import com.prealpha.aichallenge.protocol.Tile;
+
 /**
  * Starter bot implementation.
  */

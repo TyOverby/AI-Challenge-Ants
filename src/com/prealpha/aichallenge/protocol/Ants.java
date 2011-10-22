@@ -1,4 +1,4 @@
-package com.prealpha.aichallenge;
+package com.prealpha.aichallenge.protocol;
 
 import java.util.ArrayList;
 import java.util.Arrays;

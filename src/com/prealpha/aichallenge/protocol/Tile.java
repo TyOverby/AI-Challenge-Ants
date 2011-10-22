@@ -1,4 +1,4 @@
-package com.prealpha.aichallenge;
+package com.prealpha.aichallenge.protocol;
 
 /**
  * Represents a tile of the game map.

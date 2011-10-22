@@ -1,4 +1,4 @@
-package com.prealpha.aichallenge;
+package com.prealpha.aichallenge.protocol;
 
 /**
  * Provides basic game state handling.
