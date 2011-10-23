@@ -12,16 +12,13 @@ import com.prealpha.aichallenge.protocol.Point;
 class BasicPathFinder extends PathFinder {
 	private final GameMap map;
 
-	private final Point end;
-
-	public BasicPathFinder(GameMap map, Point start, Point end) {
-		super(map, start, end);
+	public BasicPathFinder(GameMap map) {
+		super(map);
 		this.map = map;
-		this.end = end;
 	}
 
 	@Override
-	protected double getDistance(PathSegment segment) {
+	protected double getDistance(PathSegment segment, Point end) {
 		int cost = segment.getGeneration();
 		int heuristic = map.getManhattanDistance(segment.getLocation(), end);
 		return cost + ((1025.0 / 1024.0) * heuristic);

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.prealpha.aichallenge.protocol.GameMap;
 import com.prealpha.aichallenge.protocol.Point;
 
 final class PathSegment {
@@ -46,12 +45,6 @@ final class PathSegment {
 
 	public PathSegment extend(Point target) {
 		return new PathSegment(this, target);
-	}
-
-	public double getDistance(GameMap map, Point target) {
-		int cost = generation;
-		int heuristic = map.getManhattanDistance(location, target);
-		return cost + (1.001 * heuristic);
 	}
 
 	public List<Point> collapse() {

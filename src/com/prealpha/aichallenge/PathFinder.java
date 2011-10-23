@@ -14,37 +14,34 @@ import com.prealpha.aichallenge.protocol.Point;
 abstract class PathFinder {
 	private final GameMap map;
 
-	private final Point end;
+	private PathSegment[][] segments;
 
-	private final PathSegment[][] segments;
+	private boolean[][] extended;
 
-	private final boolean[][] extended;
-
-	protected PathFinder(GameMap map, Point start, Point end) {
+	protected PathFinder(GameMap map) {
 		this.map = map;
-		this.end = end;
+	}
 
+	protected final List<Point> findPath(Point start, Point end) {
 		int rows = map.getRows();
 		int cols = map.getCols();
 		segments = new PathSegment[rows][cols];
-		segments[start.getRow()][start.getCol()] = new PathSegment(start);
 		extended = new boolean[rows][cols];
-	}
 
-	protected final List<Point> findPath() {
+		segments[start.getRow()][start.getCol()] = new PathSegment(start);
 		while (segments[end.getRow()][end.getCol()] == null) {
-			extend(findShortestSegment());
+			extend(findShortestSegment(end));
 		}
 		return segments[end.getRow()][end.getCol()].collapse();
 	}
 
-	private PathSegment findShortestSegment() {
+	private PathSegment findShortestSegment(Point end) {
 		PathSegment shortSegment = null;
 		double shortDistance = Double.MAX_VALUE;
 		for (int i = 0; i < map.getRows(); i++) {
 			for (int j = 0; j < map.getCols(); j++) {
 				if (segments[i][j] != null && !extended[i][j]) {
-					double distance = getDistance(segments[i][j]);
+					double distance = getDistance(segments[i][j], end);
 					if (distance < shortDistance) {
 						shortSegment = segments[i][j];
 						shortDistance = distance;
@@ -65,5 +62,5 @@ abstract class PathFinder {
 		extended[segment.getLocation().getRow()][segment.getLocation().getCol()] = true;
 	}
 
-	protected abstract double getDistance(PathSegment segment);
+	protected abstract double getDistance(PathSegment segment, Point end);
 }

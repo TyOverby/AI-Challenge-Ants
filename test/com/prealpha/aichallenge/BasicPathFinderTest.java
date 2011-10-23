@@ -48,17 +48,17 @@ public final class BasicPathFinderTest {
 
 	@Test
 	public void testFindPath() {
-		PathFinder pathFinder = new BasicPathFinder(map, new Point(0, 0),
-				new Point(5, 5));
-		List<Point> path = pathFinder.findPath();
+		BasicPathFinder pathFinder = new BasicPathFinder(map);
+		List<Point> path = pathFinder
+				.findPath(new Point(0, 0), new Point(5, 5));
 		assertEquals(10, path.size());
 	}
 
 	@Test
 	public void testFindPathObstacles() {
-		PathFinder pathFinder = new BasicPathFinder(obstacleMap,
-				new Point(0, 0), new Point(5, 5));
-		List<Point> path = pathFinder.findPath();
+		BasicPathFinder pathFinder = new BasicPathFinder(obstacleMap);
+		List<Point> path = pathFinder
+				.findPath(new Point(0, 0), new Point(5, 5));
 		assertEquals(12, path.size());
 	}
 }
