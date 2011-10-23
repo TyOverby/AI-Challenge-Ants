@@ -26,10 +26,13 @@ class AvoidingPathFinder extends PathFinder {
 	}
 
 	protected List<Point> explore(Point start) {
+		// if the start is the avoid point, pick a random base point from within
+		// the visible range instead
 		Point base;
 		if (avoid.equals(start)) {
 			Set<Point> visible = getVisiblePoints(start);
-			base = visible.iterator().next(); // essentially arbitrary
+			Point[] array = visible.toArray(new Point[visible.size()]);
+			base = array[(int) (visible.size() * Math.random())];
 		} else {
 			base = start;
 		}
