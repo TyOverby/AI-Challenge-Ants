@@ -24,6 +24,6 @@ class BasicPathFinder extends PathFinder {
 	protected double getDistance(PathSegment segment) {
 		int cost = segment.getGeneration();
 		int heuristic = map.getManhattanDistance(segment.getLocation(), end);
-		return cost + ((1.0 / 1024.0) * heuristic);
+		return cost + ((1025.0 / 1024.0) * heuristic);
 	}
 }
