@@ -30,7 +30,7 @@ public enum Ilk {
 	 *         otherwise
 	 */
 	public boolean isPassable() {
-		return (this != WATER);
+		return (this != WATER && this != FOOD);
 	}
 
 	/**

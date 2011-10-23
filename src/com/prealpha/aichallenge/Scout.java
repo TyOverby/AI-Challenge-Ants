@@ -33,16 +33,29 @@ final class Scout extends AvoidingPathFinder {
 
 	public Order getOrder() {
 		if (path == null || index >= path.size()) {
-			index = 0;
-			path = explore(position);
+			recalculate();
 		}
+		if (path == null) {
+			return null;
+		}
+
 		Point target = path.get(index++);
-		Set<Aim> directions = map.getDirections(position, target);
-		if (directions.size() != 1) {
-			throw new IllegalStateException();
+		if (map.getIlk(target).isPassable()) {
+			recalculate();
+			return getOrder();
+		} else {
+			Set<Aim> directions = map.getDirections(position, target);
+			if (directions.size() != 1) {
+				throw new IllegalStateException();
+			}
+			Order order = new Order(position, directions.iterator().next());
+			position = target;
+			return order;
 		}
-		Order order = new Order(position, directions.iterator().next());
-		position = target;
-		return order;
+	}
+
+	private void recalculate() {
+		index = 0;
+		path = explore(position);
 	}
 }

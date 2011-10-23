@@ -68,7 +68,8 @@ class AvoidingPathFinder extends PathFinder {
 			for (int j = 0; j < game.getMap().getCols(); j++) {
 				Point point = new Point(i, j);
 				if (game.getMap().getDistance(center, point) < Math.sqrt(game
-						.getViewRadius2())) {
+						.getViewRadius2())
+						&& game.getMap().getIlk(point).isPassable()) {
 					visible.add(point);
 				}
 			}

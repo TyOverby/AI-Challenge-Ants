@@ -30,7 +30,12 @@ abstract class PathFinder {
 
 		segments[start.getRow()][start.getCol()] = new PathSegment(start);
 		while (segments[end.getRow()][end.getCol()] == null) {
-			extend(findShortestSegment(end));
+			PathSegment shortSegment = findShortestSegment(end);
+			if (shortSegment != null) {
+				extend(shortSegment);
+			} else {
+				return null; // no path
+			}
 		}
 		return segments[end.getRow()][end.getCol()].collapse();
 	}

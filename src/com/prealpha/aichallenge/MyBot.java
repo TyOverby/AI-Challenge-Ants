@@ -51,7 +51,10 @@ final class MyBot extends Bot {
 	@Override
 	protected void doTurn() {
 		for (Scout ant : ants.values()) {
-			getGame().issueOrder(ant.getOrder());
+			Order order = ant.getOrder();
+			if (order != null) {
+				getGame().issueOrder(order);
+			}
 		}
 	}
 
