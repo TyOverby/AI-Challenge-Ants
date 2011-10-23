@@ -1,5 +1,5 @@
 /*
- * Role.java
+ * PathFinder.java
  * Copyright (C) 2011 Meyer Kizner
  * All rights reserved.
  */
@@ -11,7 +11,7 @@ import java.util.List;
 import com.prealpha.aichallenge.protocol.GameMap;
 import com.prealpha.aichallenge.protocol.Point;
 
-abstract class Role {
+abstract class PathFinder {
 	private final GameMap map;
 
 	private final Point end;
@@ -20,7 +20,7 @@ abstract class Role {
 
 	private final boolean[][] extended;
 
-	protected Role(GameMap map, Point start, Point end) {
+	protected PathFinder(GameMap map, Point start, Point end) {
 		this.map = map;
 		this.end = end;
 
@@ -44,7 +44,7 @@ abstract class Role {
 		for (int i = 0; i < map.getRows(); i++) {
 			for (int j = 0; j < map.getCols(); j++) {
 				if (segments[i][j] != null && !extended[i][j]) {
-					double distance = segments[i][j].getDistance(map, end);
+					double distance = getDistance(segments[i][j]);
 					if (distance < shortDistance) {
 						shortSegment = segments[i][j];
 						shortDistance = distance;
@@ -64,4 +64,6 @@ abstract class Role {
 		}
 		extended[segment.getLocation().getRow()][segment.getLocation().getCol()] = true;
 	}
+
+	protected abstract double getDistance(PathSegment segment);
 }

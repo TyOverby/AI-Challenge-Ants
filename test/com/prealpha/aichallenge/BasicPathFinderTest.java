@@ -20,12 +20,10 @@ import com.prealpha.aichallenge.protocol.GameMap;
 import com.prealpha.aichallenge.protocol.Ilk;
 import com.prealpha.aichallenge.protocol.Point;
 
-public final class RoleTest {
+public final class BasicPathFinderTest {
 	private static final int ROWS = 20;
 
 	private static final int COLS = 20;
-
-	private Role role;
 
 	private GameMap map;
 
@@ -50,17 +48,17 @@ public final class RoleTest {
 
 	@Test
 	public void testFindPath() {
-		role = new Role(map, new Point(0, 0), new Point(5, 5)) {
-		};
-		List<Point> path = role.findPath();
+		PathFinder pathFinder = new BasicPathFinder(map, new Point(0, 0),
+				new Point(5, 5));
+		List<Point> path = pathFinder.findPath();
 		assertEquals(10, path.size());
 	}
 
 	@Test
 	public void testFindPathObstacles() {
-		role = new Role(obstacleMap, new Point(0, 0), new Point(5, 5)) {
-		};
-		List<Point> path = role.findPath();
+		PathFinder pathFinder = new BasicPathFinder(obstacleMap,
+				new Point(0, 0), new Point(5, 5));
+		List<Point> path = pathFinder.findPath();
 		assertEquals(12, path.size());
 	}
 }
