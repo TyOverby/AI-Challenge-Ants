@@ -219,6 +219,17 @@ public final class GameMap {
 		}
 		return directions;
 	}
+	
+	public Set<Point> getAdjacent(Point center) {
+		Set<Point> adjacent = new HashSet<Point>();
+		for (Aim direction : Aim.values()) {
+			Point target = getTile(center, direction);
+			if (getIlk(target).isPassable()) {
+				adjacent.add(target);
+			}
+		}
+		return adjacent;
+	}
 
 	/**
 	 * Clears game state information about my ants locations.
