@@ -158,6 +158,10 @@ public final class Game {
 	 */
 	public void issueOrder(Point myAnt, Aim direction) {
 		Order order = new Order(myAnt, direction);
+		issueOrder(order);
+	}
+	
+	public void issueOrder(Order order) {
 		orders.add(order);
 		System.out.println(order);
 		System.out.flush();
