@@ -31,8 +31,8 @@ public final class GameMap {
 	private final Set<Point> foodTiles = new HashSet<Point>();
 
 	/**
-	 * Creates a new {@code GameMap} with the specified dimensions. All tiles are
-	 * initially assumed to be land.
+	 * Creates a new {@code GameMap} with the specified dimensions. All tiles
+	 * are initially assumed to be land.
 	 * 
 	 * @param rows
 	 *            game map height
@@ -180,11 +180,23 @@ public final class GameMap {
 	 * @return distance between {@code p1} and {@code p2}
 	 */
 	public double getDistance(Point p1, Point p2) {
+		int rowDelta = getRowDelta(p1, p2);
+		int colDelta = getColDelta(p1, p2);
+		return Math.sqrt(rowDelta * rowDelta + colDelta * colDelta);
+	}
+
+	public int getManhattanDistance(Point p1, Point p2) {
+		return getRowDelta(p1, p2) + getColDelta(p1, p2);
+	}
+
+	private int getRowDelta(Point p1, Point p2) {
 		int rowDelta = Math.abs(p1.getRow() - p2.getRow());
+		return Math.min(rowDelta, rows - rowDelta);
+	}
+
+	private int getColDelta(Point p1, Point p2) {
 		int colDelta = Math.abs(p1.getCol() - p2.getCol());
-		rowDelta = Math.min(rowDelta, rows - rowDelta);
-		colDelta = Math.min(colDelta, cols - colDelta);
-		return Math.sqrt(Math.pow(rowDelta, 2) + Math.pow(colDelta, 2));
+		return Math.min(colDelta, cols - colDelta);
 	}
 
 	/**
@@ -226,6 +238,17 @@ public final class GameMap {
 			}
 		}
 		return directions;
+	}
+
+	public Set<Point> getAdjacent(Point center) {
+		Set<Point> adjacent = new HashSet<Point>();
+		for (Aim direction : Aim.values()) {
+			Point target = getTile(center, direction);
+			if (getIlk(target).isPassable()) {
+				adjacent.add(target);
+			}
+		}
+		return adjacent;
 	}
 
 	/**
