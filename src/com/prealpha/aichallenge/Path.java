@@ -27,11 +27,11 @@ final class Path {
 		generation = parent.generation + 1;
 		this.location = location;
 	}
-	
+
 	public Path getParent() {
 		return parent;
 	}
-	
+
 	public int getGeneration() {
 		return generation;
 	}
@@ -46,9 +46,7 @@ final class Path {
 
 	public double getDistance(GameMap map, Point target) {
 		int cost = generation;
-		Point turn = new Point(location.getRow(), target.getCol());
-		double heuristic = map.getDistance(location, turn)
-				+ map.getDistance(turn, target);
+		int heuristic = map.getManhattanDistance(location, target);
 		return cost + (1.001 * heuristic);
 	}
 
