@@ -26,8 +26,8 @@ public abstract class Bot extends AbstractSystemInputParser {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected final void setup(int loadTime, int turnTime, int rows, int cols,
-			int turns, int viewRadius2, int attackRadius2, int spawnRadius2) {
+	final void setup(int loadTime, int turnTime, int rows, int cols, int turns,
+			int viewRadius2, int attackRadius2, int spawnRadius2) {
 		map = new GameMap(rows, cols);
 		game = new Game(map, loadTime, turnTime, turns, viewRadius2,
 				attackRadius2, spawnRadius2);
@@ -39,6 +39,9 @@ public abstract class Bot extends AbstractSystemInputParser {
 	 * @return game state information
 	 */
 	protected final Game getGame() {
+		if (game == null) {
+			throw new IllegalStateException();
+		}
 		return game;
 	}
 
@@ -48,6 +51,9 @@ public abstract class Bot extends AbstractSystemInputParser {
 	 * @return the game map
 	 */
 	protected final GameMap getMap() {
+		if (game == null) {
+			throw new IllegalStateException();
+		}
 		return map;
 	}
 

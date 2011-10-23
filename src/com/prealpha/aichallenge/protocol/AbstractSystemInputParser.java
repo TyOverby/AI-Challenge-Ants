@@ -196,9 +196,8 @@ abstract class AbstractSystemInputParser extends AbstractSystemInputReader {
 	 * @param spawnRadius2
 	 *            squared spawn radius of each ant
 	 */
-	protected abstract void setup(int loadTime, int turnTime, int rows,
-			int cols, int turns, int viewRadius2, int attackRadius2,
-			int spawnRadius2);
+	abstract void setup(int loadTime, int turnTime, int rows, int cols,
+			int turns, int viewRadius2, int attackRadius2, int spawnRadius2);
 
 	/**
 	 * Enables performing actions which should take place prior to updating the
