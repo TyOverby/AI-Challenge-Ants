@@ -58,8 +58,7 @@ public final class PathFinderTest {
 
 	@Test
 	public void testFindPath() {
-		PathFinder pathFinder = new PathFinder(map) {
-		};
+		PathFinder pathFinder = new PathFinder(map);
 		List<Point> path = pathFinder
 				.findPath(new Point(0, 0), new Point(5, 5));
 		assertEquals(10, path.size());
@@ -67,8 +66,7 @@ public final class PathFinderTest {
 
 	@Test
 	public void testFindPathObstacles() {
-		PathFinder pathFinder = new PathFinder(obstacleMap) {
-		};
+		PathFinder pathFinder = new PathFinder(obstacleMap);
 		List<Point> path = pathFinder
 				.findPath(new Point(0, 0), new Point(5, 5));
 		assertEquals(12, path.size());
