@@ -179,12 +179,12 @@ public final class GameMap {
 		return getRowDelta(p1, p2) + getColDelta(p1, p2);
 	}
 
-	private int getRowDelta(Point p1, Point p2) {
+	public int getRowDelta(Point p1, Point p2) {
 		int rowDelta = Math.abs(p1.getRow() - p2.getRow());
 		return Math.min(rowDelta, rows - rowDelta);
 	}
 
-	private int getColDelta(Point p1, Point p2) {
+	public int getColDelta(Point p1, Point p2) {
 		int colDelta = Math.abs(p1.getCol() - p2.getCol());
 		return Math.min(colDelta, cols - colDelta);
 	}
