@@ -6,11 +6,11 @@
 
 package com.prealpha.aichallenge;
 
-import com.prealpha.aichallenge.protocol.Game;
+import com.prealpha.aichallenge.protocol.GameMap;
 import com.prealpha.aichallenge.protocol.Point;
 
 abstract class Role {
-	private final Game game;
+	private final GameMap map;
 
 	private final Point end;
 
@@ -18,12 +18,12 @@ abstract class Role {
 
 	private final boolean[][] extended;
 
-	protected Role(Game game, Point start, Point end) {
-		this.game = game;
+	protected Role(GameMap map, Point start, Point end) {
+		this.map = map;
 		this.end = end;
 
-		int rows = game.getMap().getRows();
-		int cols = game.getMap().getCols();
+		int rows = map.getRows();
+		int cols = map.getCols();
 		paths = new Path[rows][cols];
 		paths[start.getRow()][start.getCol()] = new Path(start);
 		extended = new boolean[rows][cols];
@@ -39,11 +39,10 @@ abstract class Role {
 	private Path findShortestPath() {
 		Path shortPath = null;
 		double shortDistance = Double.MAX_VALUE;
-		for (int i = 0; i < game.getMap().getRows(); i++) {
-			for (int j = 0; j < game.getMap().getCols(); j++) {
+		for (int i = 0; i < map.getRows(); i++) {
+			for (int j = 0; j < map.getCols(); j++) {
 				if (paths[i][j] != null && !extended[i][j]) {
-					double distance = paths[i][j].getDistance(game.getMap(),
-							end);
+					double distance = paths[i][j].getDistance(map, end);
 					if (distance < shortDistance) {
 						shortPath = paths[i][j];
 						shortDistance = distance;
@@ -55,7 +54,7 @@ abstract class Role {
 	}
 
 	private void extend(Path path) {
-		for (Point point : game.getMap().getAdjacent(path.getLocation())) {
+		for (Point point : map.getAdjacent(path.getLocation())) {
 			if (paths[point.getRow()][point.getCol()] == null) {
 				paths[point.getRow()][point.getCol()] = path.extend(point);
 			}

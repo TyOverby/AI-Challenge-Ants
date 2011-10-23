@@ -27,6 +27,14 @@ final class Path {
 		generation = parent.generation + 1;
 		this.location = location;
 	}
+	
+	public Path getParent() {
+		return parent;
+	}
+	
+	public int getGeneration() {
+		return generation;
+	}
 
 	public Point getLocation() {
 		return location;
