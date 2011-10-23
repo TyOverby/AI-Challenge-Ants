@@ -21,6 +21,7 @@ final class MyBot extends Bot {
 			Point origin = order.getOrigin();
 			Point target = order.getTarget(getMap());
 			Ant ant = ants.get(origin);
+			ant.orderConfirmed();
 			ants.remove(origin);
 			ants.put(target, ant);
 		}
@@ -32,7 +33,7 @@ final class MyBot extends Bot {
 		if (owner == 0) {
 			Point point = new Point(row, col);
 			if (!ants.containsKey(point)) {
-				Ant ant = new Scout(getGame(), point);
+				Ant ant = new Scout(getMap(), point);
 				ants.put(point, ant);
 			}
 		}

@@ -10,4 +10,6 @@ import com.prealpha.aichallenge.protocol.Order;
 
 public interface Ant {
 	Order getOrder();
+
+	void orderConfirmed();
 }
