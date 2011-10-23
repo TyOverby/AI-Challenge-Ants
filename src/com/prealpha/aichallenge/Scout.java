@@ -7,6 +7,7 @@
 package com.prealpha.aichallenge;
 
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Set;
@@ -18,6 +19,8 @@ import com.prealpha.aichallenge.protocol.Order;
 import com.prealpha.aichallenge.protocol.Point;
 
 final class Scout extends PathFinder implements Ant {
+	private static final Set<Point> ACTIVE_TARGETS = new HashSet<Point>();
+
 	private final GameMap map;
 
 	private Point position;
@@ -59,10 +62,16 @@ final class Scout extends PathFinder implements Ant {
 	}
 
 	private void recalculate() {
+		if (path != null) {
+			ACTIVE_TARGETS.remove(path.get(path.size() - 1));
+		}
 		index = 0;
 		Point target = getTarget();
 		if (target != null) {
 			path = findPath(position, target);
+			if (path != null) {
+				ACTIVE_TARGETS.add(path.get(path.size() - 1));
+			}
 		}
 	}
 
@@ -73,6 +82,12 @@ final class Scout extends PathFinder implements Ant {
 					public int compare(Point p1, Point p2) {
 						int d1 = map.getManhattanDistance(position, p1);
 						int d2 = map.getManhattanDistance(position, p2);
+						if (ACTIVE_TARGETS.contains(p1)) {
+							d1 *= 10 * Math.random();
+						}
+						if (ACTIVE_TARGETS.contains(p2)) {
+							d2 *= 10 * Math.random();
+						}
 						return d1 - d2;
 					}
 				});
@@ -99,5 +114,10 @@ final class Scout extends PathFinder implements Ant {
 	public void orderConfirmed() {
 		position = order.getTarget(map);
 		order = null;
+	}
+
+	@Override
+	public void die() {
+		ACTIVE_TARGETS.remove(path.get(path.size() - 1));
 	}
 }

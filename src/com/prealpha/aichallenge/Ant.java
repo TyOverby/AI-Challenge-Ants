@@ -12,4 +12,6 @@ public interface Ant {
 	Order getOrder();
 
 	void orderConfirmed();
+
+	void die();
 }
