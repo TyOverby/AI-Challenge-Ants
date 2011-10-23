@@ -52,6 +52,6 @@ public final class AvoidingPathFinderTest {
 		AvoidingPathFinder pathFinder = new AvoidingPathFinder(game, new Point(
 				0, 0));
 		List<Point> path = pathFinder.explore(new Point(0, 0));
-		assertEquals((int) Math.sqrt(game.getViewRadius2()), path.size());
+		assertTrue(Math.sqrt(game.getViewRadius2()) < path.size());
 	}
 }

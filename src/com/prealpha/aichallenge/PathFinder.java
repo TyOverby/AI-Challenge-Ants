@@ -37,7 +37,7 @@ abstract class PathFinder {
 
 	private PathSegment findShortestSegment(Point end) {
 		PathSegment shortSegment = null;
-		double shortDistance = Double.MAX_VALUE;
+		double shortDistance = Double.POSITIVE_INFINITY;
 		for (int i = 0; i < map.getRows(); i++) {
 			for (int j = 0; j < map.getCols(); j++) {
 				if (segments[i][j] != null && !extended[i][j]) {

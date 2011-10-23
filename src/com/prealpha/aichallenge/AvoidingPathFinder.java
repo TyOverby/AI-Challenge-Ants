@@ -97,6 +97,10 @@ class AvoidingPathFinder extends PathFinder {
 
 	@Override
 	protected double getDistance(PathSegment segment, Point end) {
+		if (avoid.equals(segment.getLocation())) {
+			return Double.MAX_VALUE; // but less than infinity
+		}
+
 		int cost = segment.getGeneration();
 		double heuristic = (1025.0 / 1024.0)
 				* game.getMap()
