@@ -25,6 +25,8 @@ public final class PathFinderTest {
 
 	private static final int COLS = 20;
 
+	private static final int VIEW_RADIUS_2 = 55;
+
 	private GameMap map;
 
 	private GameMap obstacleMap;
@@ -35,11 +37,19 @@ public final class PathFinderTest {
 		// since I don't want to make this constructor public
 		Constructor<?> constructor = GameMap.class.getDeclaredConstructors()[0];
 		constructor.setAccessible(true);
-		map = (GameMap) constructor.newInstance(ROWS, COLS);
-		obstacleMap = (GameMap) constructor.newInstance(ROWS, COLS);
+		map = (GameMap) constructor.newInstance(ROWS, COLS, VIEW_RADIUS_2);
+		obstacleMap = (GameMap) constructor.newInstance(ROWS, COLS,
+				VIEW_RADIUS_2);
 		for (Method method : GameMap.class.getDeclaredMethods()) {
 			if (method.getName().equals("update")) {
 				method.setAccessible(true);
+				for (int i = 0; i < ROWS; i++) {
+					for (int j = 0; j < COLS; j++) {
+						Point point = new Point(i, j);
+						method.invoke(map, point, Ilk.LAND);
+						method.invoke(obstacleMap, point, Ilk.LAND);
+					}
+				}
 				method.invoke(obstacleMap, new Point(5, 4), Ilk.WATER);
 				method.invoke(obstacleMap, new Point(4, 5), Ilk.WATER);
 			}
