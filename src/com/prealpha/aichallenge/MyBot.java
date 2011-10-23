@@ -9,7 +9,7 @@ import com.prealpha.aichallenge.protocol.Order;
 import com.prealpha.aichallenge.protocol.Point;
 
 final class MyBot extends Bot {
-	private final Map<Point, Ant> ants;
+	private Map<Point, Ant> ants;
 
 	private MyBot() {
 		ants = new HashMap<Point, Ant>();
@@ -17,14 +17,15 @@ final class MyBot extends Bot {
 
 	@Override
 	protected void beforeUpdate() {
+		Map<Point, Ant> newAnts = new HashMap<Point, Ant>();
 		for (Order order : getOrders()) {
 			Point origin = order.getOrigin();
 			Point target = order.getTarget(getMap());
 			Ant ant = ants.get(origin);
 			ant.orderConfirmed();
-			ants.remove(origin);
-			ants.put(target, ant);
+			newAnts.put(target, ant);
 		}
+		ants = newAnts;
 		super.beforeUpdate();
 	}
 
