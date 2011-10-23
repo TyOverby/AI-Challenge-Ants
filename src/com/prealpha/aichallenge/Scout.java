@@ -71,13 +71,9 @@ final class Scout extends PathFinder implements Ant {
 				new Comparator<Point>() {
 					@Override
 					public int compare(Point p1, Point p2) {
-						int d1 = 0;
-						int d2 = 0;
-						for (Point hill : map.getMyHills()) {
-							d1 += map.getManhattanDistance(p1, hill);
-							d2 += map.getManhattanDistance(p2, hill);
-						}
-						return d2 - d1;
+						int d1 = map.getManhattanDistance(position, p1);
+						int d2 = map.getManhattanDistance(position, p2);
+						return d1 - d2;
 					}
 				});
 		for (int i = 0; i < map.getRows(); i++) {
