@@ -11,7 +11,7 @@ public enum Ilk {
 	WATER(false),
 
 	/** Food tile. */
-	FOOD(false),
+	FOOD(true),
 
 	/** Land tile. */
 	LAND(true),
