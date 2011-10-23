@@ -9,10 +9,10 @@ import com.prealpha.aichallenge.protocol.Order;
 import com.prealpha.aichallenge.protocol.Point;
 
 final class MyBot extends Bot {
-	private final Map<Point, Scout> ants;
+	private final Map<Point, Ant> ants;
 
 	private MyBot() {
-		ants = new HashMap<Point, Scout>();
+		ants = new HashMap<Point, Ant>();
 	}
 
 	@Override
@@ -20,7 +20,7 @@ final class MyBot extends Bot {
 		for (Order order : getOrders()) {
 			Point origin = order.getOrigin();
 			Point target = order.getTarget(getMap());
-			Scout ant = ants.get(origin);
+			Ant ant = ants.get(origin);
 			ants.remove(origin);
 			ants.put(target, ant);
 		}
@@ -32,7 +32,7 @@ final class MyBot extends Bot {
 		if (owner == 0) {
 			Point point = new Point(row, col);
 			if (!ants.containsKey(point)) {
-				Scout ant = new Scout(getGame(), point);
+				Ant ant = new Scout(getGame(), point);
 				ants.put(point, ant);
 			}
 		}
@@ -50,7 +50,7 @@ final class MyBot extends Bot {
 
 	@Override
 	protected void doTurn() {
-		for (Scout ant : ants.values()) {
+		for (Ant ant : ants.values()) {
 			Order order = ant.getOrder();
 			if (order != null) {
 				issueOrder(order);
