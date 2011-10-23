@@ -1,6 +1,6 @@
 /*
  * PathFinder.java
- * Copyright (C) 2011 Meyer Kizner
+ * Copyright (C) 2011 Meyer Kizner, Ty Overby
  * All rights reserved.
  */
 
