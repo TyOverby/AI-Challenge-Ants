@@ -60,7 +60,10 @@ final class Scout extends PathFinder implements Ant {
 
 	private void recalculate() {
 		index = 0;
-		path = findPath(position, getTarget());
+		Point target = getTarget();
+		if (target != null) {
+			path = findPath(position, target);
+		}
 	}
 
 	private Point getTarget() {

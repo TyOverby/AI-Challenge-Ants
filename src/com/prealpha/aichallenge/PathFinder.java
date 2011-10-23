@@ -59,7 +59,8 @@ class PathFinder {
 
 	private void extend(PathSegment segment) {
 		for (Point point : map.getAdjacent(segment.getLocation())) {
-			if (segments[point.getRow()][point.getCol()] == null) {
+			if (map.getIlk(point).isPassable()
+					&& segments[point.getRow()][point.getCol()] == null) {
 				segments[point.getRow()][point.getCol()] = segment
 						.extend(point);
 			}

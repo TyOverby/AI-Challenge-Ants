@@ -238,10 +238,7 @@ public final class GameMap {
 	public Set<Point> getAdjacent(Point center) {
 		Set<Point> adjacent = new HashSet<Point>();
 		for (Aim direction : Aim.values()) {
-			Point target = getPoint(center, direction);
-			if (getIlk(target).isPassable()) {
-				adjacent.add(target);
-			}
+			adjacent.add(getPoint(center, direction));
 		}
 		return adjacent;
 	}
