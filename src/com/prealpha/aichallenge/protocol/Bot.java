@@ -98,7 +98,10 @@ public abstract class Bot extends AbstractSystemInputParser {
 	@Override
 	protected void afterUpdate() {
 		map.updateVisible();
+	}
 
+	@Override
+	protected final void finishTurn() {
 		for (Point ant : map.getMyAnts()) {
 			if (!origins.containsKey(ant) && targets.containsKey(ant)) {
 				targets.remove(ant);
@@ -108,6 +111,7 @@ public abstract class Bot extends AbstractSystemInputParser {
 			System.out.println(order);
 		}
 		System.out.flush();
+		super.finishTurn();
 	}
 
 	protected final void issueOrder(Order order) {

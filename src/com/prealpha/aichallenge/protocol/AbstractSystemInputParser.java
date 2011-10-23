@@ -276,7 +276,7 @@ abstract class AbstractSystemInputParser extends AbstractSystemInputReader {
 	/**
 	 * Finishes turn.
 	 */
-	protected final void finishTurn() {
+	protected void finishTurn() {
 		System.out.println("go");
 		System.out.flush();
 	}
