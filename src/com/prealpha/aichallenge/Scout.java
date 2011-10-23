@@ -118,6 +118,8 @@ final class Scout extends PathFinder implements Ant {
 
 	@Override
 	public void die() {
-		ACTIVE_TARGETS.remove(path.get(path.size() - 1));
+		if (path != null) {
+			ACTIVE_TARGETS.remove(path.get(path.size() - 1));
+		}
 	}
 }

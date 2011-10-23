@@ -45,9 +45,10 @@ final class MyBot extends Bot {
 	protected void removeAnt(int row, int col, int owner) {
 		if (owner == 0) {
 			Point point = new Point(row, col);
-			Ant ant = ants.get(point);
-			ant.die();
-			ants.remove(point);
+			if (ants.containsKey(point)) {
+				ants.get(point).die();
+				ants.remove(point);
+			}
 		}
 		super.removeAnt(row, col, owner);
 	}
