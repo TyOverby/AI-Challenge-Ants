@@ -1,9 +1,9 @@
-package com.prealpha.aichallenge;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.prealpha.aichallenge.Ant;
+import com.prealpha.aichallenge.Scout;
 import com.prealpha.aichallenge.protocol.Bot;
 import com.prealpha.aichallenge.protocol.Order;
 import com.prealpha.aichallenge.protocol.Point;

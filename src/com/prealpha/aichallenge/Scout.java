@@ -18,7 +18,7 @@ import com.prealpha.aichallenge.protocol.Ilk;
 import com.prealpha.aichallenge.protocol.Order;
 import com.prealpha.aichallenge.protocol.Point;
 
-final class Scout extends PathFinder implements Ant {
+public final class Scout extends PathFinder implements Ant {
 	private static final Set<Point> ACTIVE_TARGETS = new HashSet<Point>();
 
 	private final GameMap map;
