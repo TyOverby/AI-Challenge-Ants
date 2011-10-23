@@ -1,9 +1,5 @@
 package com.prealpha.aichallenge.protocol;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * Holds all game data and current game state.
  */
@@ -28,8 +24,6 @@ public final class Game {
 	private final int spawnRadius2;
 
 	private long turnStartTime;
-
-	private final Set<Order> orders = new HashSet<Order>();
 
 	/**
 	 * Creates new {@link Game} object.
@@ -142,32 +136,5 @@ public final class Game {
 	 */
 	public int getTimeRemaining() {
 		return turnTime - (int) (System.currentTimeMillis() - turnStartTime);
-	}
-
-	public Set<Order> getOrders() {
-		return Collections.unmodifiableSet(orders);
-	}
-
-	/**
-	 * Issues an order by sending it to the system output.
-	 * 
-	 * @param myAnt
-	 *            map tile with my ant
-	 * @param direction
-	 *            direction in which to move my ant
-	 */
-	public void issueOrder(Point myAnt, Aim direction) {
-		Order order = new Order(myAnt, direction);
-		issueOrder(order);
-	}
-	
-	public void issueOrder(Order order) {
-		orders.add(order);
-		System.out.println(order);
-		System.out.flush();
-	}
-
-	void clearOrders() {
-		orders.clear();
 	}
 }

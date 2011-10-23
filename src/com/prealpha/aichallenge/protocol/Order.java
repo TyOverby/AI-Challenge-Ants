@@ -21,7 +21,7 @@ public final class Order {
 		this.direction = direction;
 	}
 
-	public Point getPoint() {
+	public Point getOrigin() {
 		return point;
 	}
 

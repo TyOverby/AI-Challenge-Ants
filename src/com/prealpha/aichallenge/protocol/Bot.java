@@ -1,14 +1,25 @@
 package com.prealpha.aichallenge.protocol;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * Provides basic game state handling.
  */
 public abstract class Bot extends AbstractSystemInputParser {
+	private final Map<Point, Order> origins;
+
+	private final Map<Point, Order> targets;
+
 	private Game game;
 
 	private GameMap map;
 
 	protected Bot() {
+		origins = new HashMap<Point, Order>();
+		targets = new HashMap<Point, Order>();
 	}
 
 	/**
@@ -42,8 +53,9 @@ public abstract class Bot extends AbstractSystemInputParser {
 
 	@Override
 	protected void beforeUpdate() {
+		origins.clear();
+		targets.clear();
 		game.setTurnStartTime(System.currentTimeMillis());
-		game.clearOrders();
 		map.clearMyAnts();
 		map.clearEnemyAnts();
 		map.clearMyHills();
@@ -78,5 +90,33 @@ public abstract class Bot extends AbstractSystemInputParser {
 
 	@Override
 	protected void afterUpdate() {
+		for (Point ant : map.getMyAnts()) {
+			if (!origins.containsKey(ant) && targets.containsKey(ant)) {
+				targets.remove(ant);
+			}
+		}
+		for (Order order : targets.values()) {
+			System.out.println(order);
+		}
+		System.out.flush();
+	}
+
+	protected final void issueOrder(Order order) {
+		Point origin = order.getOrigin();
+		Point target = order.getTarget(map);
+		if (!targets.containsKey(target)) {
+			if (origins.containsKey(origin)) {
+				Order other = origins.get(origin);
+				Point otherTarget = other.getTarget(map);
+				origins.remove(origin);
+				targets.remove(otherTarget);
+			}
+			origins.put(origin, order);
+			targets.put(target, order);
+		}
+	}
+
+	protected final Set<Order> getOrders() {
+		return new HashSet<Order>(targets.values());
 	}
 }

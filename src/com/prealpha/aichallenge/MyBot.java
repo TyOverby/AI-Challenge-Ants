@@ -17,11 +17,11 @@ final class MyBot extends Bot {
 
 	@Override
 	protected void beforeUpdate() {
-		for (Order order : getGame().getOrders()) {
-			Point current = order.getPoint();
+		for (Order order : getOrders()) {
+			Point origin = order.getOrigin();
 			Point target = order.getTarget(getMap());
-			Scout ant = ants.get(current);
-			ants.remove(current);
+			Scout ant = ants.get(origin);
+			ants.remove(origin);
 			ants.put(target, ant);
 		}
 		super.beforeUpdate();
@@ -53,7 +53,7 @@ final class MyBot extends Bot {
 		for (Scout ant : ants.values()) {
 			Order order = ant.getOrder();
 			if (order != null) {
-				getGame().issueOrder(order);
+				issueOrder(order);
 			}
 		}
 	}
