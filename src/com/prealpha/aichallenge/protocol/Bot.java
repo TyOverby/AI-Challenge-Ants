@@ -28,9 +28,9 @@ public abstract class Bot extends AbstractSystemInputParser {
 	@Override
 	final void setup(int loadTime, int turnTime, int rows, int cols, int turns,
 			int viewRadius2, int attackRadius2, int spawnRadius2) {
-		map = new GameMap(rows, cols);
-		game = new Game(map, loadTime, turnTime, turns, viewRadius2,
-				attackRadius2, spawnRadius2);
+		map = new GameMap(rows, cols, viewRadius2);
+		game = new Game(map, loadTime, turnTime, turns, attackRadius2,
+				spawnRadius2);
 	}
 
 	/**
@@ -76,7 +76,8 @@ public abstract class Bot extends AbstractSystemInputParser {
 
 	@Override
 	protected void addAnt(int row, int col, int owner) {
-		map.update(new Point(row, col), owner > 0 ? Ilk.ENEMY_ANT : Ilk.MY_ANT);
+		Point point = new Point(row, col);
+		map.update(point, owner > 0 ? Ilk.ENEMY_ANT : Ilk.MY_ANT);
 	}
 
 	@Override
@@ -96,6 +97,8 @@ public abstract class Bot extends AbstractSystemInputParser {
 
 	@Override
 	protected void afterUpdate() {
+		map.updateVisible();
+
 		for (Point ant : map.getMyAnts()) {
 			if (!origins.containsKey(ant) && targets.containsKey(ant)) {
 				targets.remove(ant);

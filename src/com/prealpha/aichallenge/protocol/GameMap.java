@@ -16,6 +16,8 @@ public final class GameMap {
 
 	private final int cols;
 
+	private final double viewRadius;
+
 	private final Ilk[][] ilk;
 
 	private final Set<Point> myAnts = new HashSet<Point>();
@@ -36,13 +38,16 @@ public final class GameMap {
 	 *            game map height
 	 * @param cols
 	 *            game map width
+	 * @param viewRadius2
+	 *            squared view radius of each ant
 	 */
-	GameMap(int rows, int cols) {
+	GameMap(int rows, int cols, int viewRadius2) {
 		this.rows = rows;
 		this.cols = cols;
+		viewRadius = Math.sqrt(viewRadius2);
 		ilk = new Ilk[rows][cols];
 		for (Ilk[] row : ilk) {
-			Arrays.fill(row, Ilk.LAND);
+			Arrays.fill(row, Ilk.UNKNOWN);
 		}
 	}
 
@@ -241,6 +246,15 @@ public final class GameMap {
 		return adjacent;
 	}
 
+	public boolean isVisible(Point point) {
+		for (Point ant : getMyAnts()) {
+			if (getDistance(point, ant) < viewRadius) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	/**
 	 * Clears game state information about my ants locations.
 	 */
@@ -316,6 +330,16 @@ public final class GameMap {
 			enemyHills.add(tile);
 		} else {
 			myHills.add(tile);
+		}
+	}
+
+	void updateVisible() {
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				if (isVisible(new Point(i, j)) && ilk[i][j] == Ilk.UNKNOWN) {
+					ilk[i][j] = Ilk.LAND;
+				}
+			}
 		}
 	}
 }

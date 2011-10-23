@@ -4,43 +4,42 @@ package com.prealpha.aichallenge.protocol;
  * Represents type of tile on the game map.
  */
 public enum Ilk {
+	/** We've never had visibility on this area. */
+	UNKNOWN(false),
+
 	/** Water tile. */
-	WATER,
+	WATER(false),
 
 	/** Food tile. */
-	FOOD,
+	FOOD(false),
 
 	/** Land tile. */
-	LAND,
+	LAND(true),
 
 	/** Dead ant tile. */
-	DEAD,
+	DEAD(true),
 
 	/** My ant tile. */
-	MY_ANT,
+	MY_ANT(true),
 
 	/** Enemy ant tile. */
-	ENEMY_ANT;
+	ENEMY_ANT(true);
 
-	/**
-	 * Checks if this type of tile is passable, which means it is not a water
-	 * tile.
-	 * 
-	 * @return <code>true</code> if this is not a water tile, <code>false</code>
-	 *         otherwise
-	 */
-	public boolean isPassable() {
-		return (this != WATER && this != FOOD);
+	private final boolean passable;
+
+	private Ilk(boolean passable) {
+		this.passable = passable;
 	}
 
 	/**
-	 * Checks if this type of tile is unoccupied, which means it is a land tile
-	 * or a dead ant tile.
+	 * Checks if this type of tile is passable, meaning that it could be
+	 * possible to move there. Note that this does not refer to whether we can
+	 * move <i>this</i> turn.
 	 * 
-	 * @return <code>true</code> if this is a land tile or a dead ant tile,
-	 *         <code>false</code> otherwise
+	 * @return {@code true} if this tile is potentially passable, otherwise
+	 *         {@code false}
 	 */
-	public boolean isUnoccupied() {
-		return (this == LAND || this == DEAD);
+	public boolean isPassable() {
+		return passable;
 	}
 }
