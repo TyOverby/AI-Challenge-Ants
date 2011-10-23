@@ -31,7 +31,7 @@ abstract class PathFinder {
 		extended = new boolean[rows][cols];
 	}
 
-	protected List<Point> findPath() {
+	protected final List<Point> findPath() {
 		while (segments[end.getRow()][end.getCol()] == null) {
 			extend(findShortestSegment());
 		}

@@ -6,11 +6,9 @@
 
 package com.prealpha.aichallenge.protocol;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public final class GameMap {
@@ -117,14 +115,6 @@ public final class GameMap {
 		return new Point(row, col);
 	}
 
-	public Set<Point> getAdjacent(Point center) {
-		Set<Point> adjacent = new HashSet<Point>(4);
-		for (Aim direction : Aim.values()) {
-			adjacent.add(getPoint(center, direction));
-		}
-		return adjacent;
-	}
-
 	/**
 	 * Returns a set containing all my ants locations.
 	 * 
@@ -209,8 +199,8 @@ public final class GameMap {
 	 *            another location on the game map
 	 * @return orthogonal directions from {@code p1} to {@code p2}
 	 */
-	public List<Aim> getDirections(Point p1, Point p2) {
-		List<Aim> directions = new ArrayList<Aim>();
+	public Set<Aim> getDirections(Point p1, Point p2) {
+		Set<Aim> directions = new HashSet<Aim>();
 		if (p1.getRow() < p2.getRow()) {
 			if (p2.getRow() - p1.getRow() >= rows / 2) {
 				directions.add(Aim.NORTH);
@@ -243,7 +233,7 @@ public final class GameMap {
 	public Set<Point> getAdjacent(Point center) {
 		Set<Point> adjacent = new HashSet<Point>();
 		for (Aim direction : Aim.values()) {
-			Point target = getTile(center, direction);
+			Point target = getPoint(center, direction);
 			if (getIlk(target).isPassable()) {
 				adjacent.add(target);
 			}
