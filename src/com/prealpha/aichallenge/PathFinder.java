@@ -67,5 +67,9 @@ abstract class PathFinder {
 		extended[segment.getLocation().getRow()][segment.getLocation().getCol()] = true;
 	}
 
-	protected abstract double getDistance(PathSegment segment, Point end);
+	private double getDistance(PathSegment segment, Point end) {
+		int cost = segment.getGeneration();
+		int heuristic = map.getManhattanDistance(segment.getLocation(), end);
+		return cost + ((1025.0 / 1024.0) * heuristic);
+	}
 }

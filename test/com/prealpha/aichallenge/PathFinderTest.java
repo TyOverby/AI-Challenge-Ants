@@ -1,5 +1,5 @@
 /*
- * RoleTest.java
+ * PathFinderTest.java
  * Copyright (C) 2011 Meyer Kizner
  * All rights reserved.
  */
@@ -20,7 +20,7 @@ import com.prealpha.aichallenge.protocol.GameMap;
 import com.prealpha.aichallenge.protocol.Ilk;
 import com.prealpha.aichallenge.protocol.Point;
 
-public final class BasicPathFinderTest {
+public final class PathFinderTest {
 	private static final int ROWS = 20;
 
 	private static final int COLS = 20;
@@ -48,7 +48,8 @@ public final class BasicPathFinderTest {
 
 	@Test
 	public void testFindPath() {
-		PathFinder pathFinder = new BasicPathFinder(map);
+		PathFinder pathFinder = new PathFinder(map) {
+		};
 		List<Point> path = pathFinder
 				.findPath(new Point(0, 0), new Point(5, 5));
 		assertEquals(10, path.size());
@@ -56,7 +57,8 @@ public final class BasicPathFinderTest {
 
 	@Test
 	public void testFindPathObstacles() {
-		PathFinder pathFinder = new BasicPathFinder(obstacleMap);
+		PathFinder pathFinder = new PathFinder(obstacleMap) {
+		};
 		List<Point> path = pathFinder
 				.findPath(new Point(0, 0), new Point(5, 5));
 		assertEquals(12, path.size());
