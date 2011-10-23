@@ -21,7 +21,7 @@ final class MyBot extends Bot {
 			Point current = order.getPoint();
 			Point target = order.getTarget(getMap());
 			Scout ant = ants.get(current);
-			ants.remove(ant);
+			ants.remove(current);
 			ants.put(target, ant);
 		}
 		super.beforeUpdate();
