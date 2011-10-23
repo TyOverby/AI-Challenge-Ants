@@ -6,6 +6,8 @@
 
 package com.prealpha.aichallenge;
 
+import java.util.List;
+
 import com.prealpha.aichallenge.protocol.GameMap;
 import com.prealpha.aichallenge.protocol.Point;
 
@@ -14,7 +16,7 @@ abstract class Role {
 
 	private final Point end;
 
-	private final Path[][] paths;
+	private final PathSegment[][] segments;
 
 	private final boolean[][] extended;
 
@@ -24,41 +26,42 @@ abstract class Role {
 
 		int rows = map.getRows();
 		int cols = map.getCols();
-		paths = new Path[rows][cols];
-		paths[start.getRow()][start.getCol()] = new Path(start);
+		segments = new PathSegment[rows][cols];
+		segments[start.getRow()][start.getCol()] = new PathSegment(start);
 		extended = new boolean[rows][cols];
 	}
 
-	protected Path findPath() {
-		while (paths[end.getRow()][end.getCol()] == null) {
-			extend(findShortestPath());
+	protected List<Point> findPath() {
+		while (segments[end.getRow()][end.getCol()] == null) {
+			extend(findShortestSegment());
 		}
-		return paths[end.getRow()][end.getCol()];
+		return segments[end.getRow()][end.getCol()].collapse();
 	}
 
-	private Path findShortestPath() {
-		Path shortPath = null;
+	private PathSegment findShortestSegment() {
+		PathSegment shortSegment = null;
 		double shortDistance = Double.MAX_VALUE;
 		for (int i = 0; i < map.getRows(); i++) {
 			for (int j = 0; j < map.getCols(); j++) {
-				if (paths[i][j] != null && !extended[i][j]) {
-					double distance = paths[i][j].getDistance(map, end);
+				if (segments[i][j] != null && !extended[i][j]) {
+					double distance = segments[i][j].getDistance(map, end);
 					if (distance < shortDistance) {
-						shortPath = paths[i][j];
+						shortSegment = segments[i][j];
 						shortDistance = distance;
 					}
 				}
 			}
 		}
-		return shortPath;
+		return shortSegment;
 	}
 
-	private void extend(Path path) {
-		for (Point point : map.getAdjacent(path.getLocation())) {
-			if (paths[point.getRow()][point.getCol()] == null) {
-				paths[point.getRow()][point.getCol()] = path.extend(point);
+	private void extend(PathSegment segment) {
+		for (Point point : map.getAdjacent(segment.getLocation())) {
+			if (segments[point.getRow()][point.getCol()] == null) {
+				segments[point.getRow()][point.getCol()] = segment
+						.extend(point);
 			}
 		}
-		extended[path.getLocation().getRow()][path.getLocation().getCol()] = true;
+		extended[segment.getLocation().getRow()][segment.getLocation().getCol()] = true;
 	}
 }

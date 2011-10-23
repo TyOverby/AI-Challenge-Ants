@@ -1,34 +1,38 @@
 /*
- * Path.java
+ * PathSegment.java
  * Copyright (C) 2011 Meyer Kizner
  * All rights reserved.
  */
 
 package com.prealpha.aichallenge;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import com.prealpha.aichallenge.protocol.GameMap;
 import com.prealpha.aichallenge.protocol.Point;
 
-final class Path {
-	private final Path parent;
+final class PathSegment {
+	private final PathSegment parent;
 
 	private final int generation;
 
 	private final Point location;
 
-	public Path(Point location) {
+	public PathSegment(Point location) {
 		parent = null;
 		generation = 0;
 		this.location = location;
 	}
 
-	private Path(Path parent, Point location) {
+	private PathSegment(PathSegment parent, Point location) {
 		this.parent = parent;
 		generation = parent.generation + 1;
 		this.location = location;
 	}
 
-	public Path getParent() {
+	public PathSegment getParent() {
 		return parent;
 	}
 
@@ -40,14 +44,25 @@ final class Path {
 		return location;
 	}
 
-	public Path extend(Point target) {
-		return new Path(this, target);
+	public PathSegment extend(Point target) {
+		return new PathSegment(this, target);
 	}
 
 	public double getDistance(GameMap map, Point target) {
 		int cost = generation;
 		int heuristic = map.getManhattanDistance(location, target);
 		return cost + (1.001 * heuristic);
+	}
+
+	public List<Point> collapse() {
+		List<Point> path = new ArrayList<Point>(generation);
+		PathSegment current = this;
+		while (path.size() < generation) {
+			path.add(current.location);
+			current = current.parent;
+		}
+		Collections.reverse(path);
+		return path;
 	}
 
 	@Override
@@ -68,10 +83,10 @@ final class Path {
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof Path)) {
+		if (!(obj instanceof PathSegment)) {
 			return false;
 		}
-		Path other = (Path) obj;
+		PathSegment other = (PathSegment) obj;
 		if (location == null) {
 			if (other.location != null) {
 				return false;

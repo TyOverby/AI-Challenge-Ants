@@ -11,6 +11,7 @@ import static org.junit.Assert.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -51,15 +52,15 @@ public final class RoleTest {
 	public void testFindPath() {
 		role = new Role(map, new Point(0, 0), new Point(5, 5)) {
 		};
-		Path path = role.findPath();
-		assertEquals(10, path.getGeneration());
+		List<Point> path = role.findPath();
+		assertEquals(10, path.size());
 	}
 
 	@Test
 	public void testFindPathObstacles() {
 		role = new Role(obstacleMap, new Point(0, 0), new Point(5, 5)) {
 		};
-		Path path = role.findPath();
-		assertEquals(12, path.getGeneration());
+		List<Point> path = role.findPath();
+		assertEquals(12, path.size());
 	}
 }
