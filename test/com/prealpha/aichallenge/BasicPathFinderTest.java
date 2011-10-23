@@ -48,7 +48,7 @@ public final class BasicPathFinderTest {
 
 	@Test
 	public void testFindPath() {
-		BasicPathFinder pathFinder = new BasicPathFinder(map);
+		PathFinder pathFinder = new BasicPathFinder(map);
 		List<Point> path = pathFinder
 				.findPath(new Point(0, 0), new Point(5, 5));
 		assertEquals(10, path.size());
@@ -56,7 +56,7 @@ public final class BasicPathFinderTest {
 
 	@Test
 	public void testFindPathObstacles() {
-		BasicPathFinder pathFinder = new BasicPathFinder(obstacleMap);
+		PathFinder pathFinder = new BasicPathFinder(obstacleMap);
 		List<Point> path = pathFinder
 				.findPath(new Point(0, 0), new Point(5, 5));
 		assertEquals(12, path.size());
