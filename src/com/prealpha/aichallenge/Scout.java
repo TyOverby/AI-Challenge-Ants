@@ -28,8 +28,6 @@ public final class Scout extends PathFinder implements Ant {
 
 	private List<Point> path;
 
-	private int index;
-
 	private Order order;
 
 	public Scout(GameMap map, Point position) {
@@ -40,33 +38,35 @@ public final class Scout extends PathFinder implements Ant {
 
 	@Override
 	public Order getOrder() {
-		if (path == null || index >= path.size()) {
+		order = doGetOrder();
+		if (order == null) {
 			recalculate();
+			order = doGetOrder();
 		}
-		if (path == null || index >= path.size()) {
-			return null;
-		}
+		return order;
+	}
 
-		Point target = path.get(index++);
-		if (!map.getIlk(target).isPassable()) {
-			recalculate();
-			return getOrder();
-		} else {
-			Set<Aim> directions = map.getDirections(position, target);
-			if (directions.size() != 1) {
-				throw new IllegalStateException("invalid path");
+	private Order doGetOrder() {
+		if (path != null) {
+			int index = path.indexOf(position) + 1;
+			if (index < path.size()) {
+				Point target = path.get(index);
+				if (map.getIlk(target).isPassable()) {
+					Set<Aim> directions = map.getDirections(position, target);
+					if (directions.size() == 1) {
+						Aim direction = directions.iterator().next();
+						return new Order(position, direction);
+					}
+				}
 			}
-			Aim direction = directions.iterator().next();
-			order = new Order(position, direction);
-			return order;
 		}
+		return null;
 	}
 
 	private void recalculate() {
 		if (path != null) {
 			ACTIVE_TARGETS.remove(path.get(path.size() - 1));
 		}
-		index = 0;
 		Point target = getTarget();
 		if (target != null) {
 			path = findPath(position, target);
