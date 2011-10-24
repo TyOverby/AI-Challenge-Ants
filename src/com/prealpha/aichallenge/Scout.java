@@ -13,6 +13,7 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 import com.prealpha.aichallenge.protocol.Aim;
+import com.prealpha.aichallenge.protocol.Game;
 import com.prealpha.aichallenge.protocol.GameMap;
 import com.prealpha.aichallenge.protocol.Ilk;
 import com.prealpha.aichallenge.protocol.Order;
@@ -69,7 +70,7 @@ public final class Scout extends PathFinder implements Ant {
 		Point target = getTarget();
 		if (target != null) {
 			path = findPath(position, target);
-			if (path != null) {
+			if (path != null && !path.isEmpty()) {
 				ACTIVE_TARGETS.add(path.get(path.size() - 1));
 			}
 		}
@@ -83,10 +84,10 @@ public final class Scout extends PathFinder implements Ant {
 						int d1 = map.getManhattanDistance(position, p1);
 						int d2 = map.getManhattanDistance(position, p2);
 						if (ACTIVE_TARGETS.contains(p1)) {
-							d1 *= 10 * Math.random();
+							d1 *= Game.MAX_MAP_SIZE;
 						}
 						if (ACTIVE_TARGETS.contains(p2)) {
-							d2 *= 10 * Math.random();
+							d2 *= Game.MAX_MAP_SIZE;
 						}
 						return d1 - d2;
 					}
@@ -118,7 +119,7 @@ public final class Scout extends PathFinder implements Ant {
 
 	@Override
 	public void die() {
-		if (path != null) {
+		if (path != null && !path.isEmpty()) {
 			ACTIVE_TARGETS.remove(path.get(path.size() - 1));
 		}
 	}
