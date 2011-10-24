@@ -2,3 +2,6 @@
 /tools
 *.class
 *.jar
+*.swp
+*.swo
+*~
