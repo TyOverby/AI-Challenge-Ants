@@ -11,7 +11,7 @@ import java.util.List;
 import com.prealpha.aichallenge.protocol.GameMap;
 import com.prealpha.aichallenge.protocol.Point;
 
-class PathFinder {
+public class PathFinder {
 	private final GameMap map;
 
 	private PathSegment[][] segments;

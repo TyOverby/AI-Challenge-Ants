@@ -1,16 +1,12 @@
 JAVAC=javac
 JAVAC_ARGS=
 
-SOURCES=MyBot.java
-CLASSES=$(SOURCES:%.java=%.class)
-
 .PHONY: all clean
 
 all: $(CLASSES)
-	jar cvfm MyBot.jar Manifest.txt $(CLASSES)
-
-%.class: %.java
-	$(JAVAC) $(JAVAC_ARGS) $<
+	echo $(SOURCES)
+	$(JAVAC) $(JAVAC_ARGS) `find ./ -name "*.java"`
+	jar cvfm MyBot.jar Manifest.txt `find ./ -name "*.class"`
 
 clean:
 	-rm -Rf *.class
