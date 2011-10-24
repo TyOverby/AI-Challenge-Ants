@@ -3,6 +3,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.prealpha.aichallenge.ants.Ant;
+import com.prealpha.aichallenge.ants.Hunter;
 import com.prealpha.aichallenge.ants.Scout;
 import com.prealpha.aichallenge.protocol.Bot;
 import com.prealpha.aichallenge.protocol.Order;
@@ -10,6 +11,7 @@ import com.prealpha.aichallenge.protocol.Point;
 
 final class MyBot extends Bot {
 	private Map<Point, Ant> ants;
+	private int antNum = 0;
 
 	private MyBot() {
 		ants = new HashMap<Point, Ant>();
@@ -31,10 +33,26 @@ final class MyBot extends Bot {
 
 	@Override
 	protected void addAnt(int row, int col, int owner) {
+		antNum++;
+
 		if (owner == 0) {
 			Point point = new Point(row, col);
 			if (!ants.containsKey(point)) {
-				Ant ant = new Scout(getMap(), point);
+				Ant ant;
+
+				// Make sure that the first 5 ants are hunters
+				if(antNum<10){				
+					ant = new Hunter(getMap(), point);
+				}else{
+					//After the first 5 ants, every 3rd is a hunter
+					if(antNum%5==0){
+						ant = new Hunter(getMap(),point);
+					}
+					else{
+						ant = new Scout(getMap(),point);
+					}
+				}
+
 				ants.put(point, ant);
 			}
 		}
@@ -43,6 +61,8 @@ final class MyBot extends Bot {
 
 	@Override
 	protected void removeAnt(int row, int col, int owner) {
+		antNum--;
+
 		if (owner == 0) {
 			Point point = new Point(row, col);
 			if (ants.containsKey(point)) {

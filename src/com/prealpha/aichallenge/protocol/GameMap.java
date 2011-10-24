@@ -71,6 +71,13 @@ public final class GameMap {
 
 	/**
 	 * Returns ilk at the specified location.
+	 * UNKNOWN
+	 * WATER
+	 * FOOD
+	 * LAND
+	 * DEAD
+	 * MY_ANT
+	 * ENEMY_ANT
 	 * 
 	 * @param point
 	 *            location on the game map

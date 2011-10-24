@@ -13,13 +13,13 @@ import com.prealpha.aichallenge.protocol.GameMap;
 import com.prealpha.aichallenge.protocol.Ilk;
 import com.prealpha.aichallenge.protocol.Point;
 
-public final class Scout extends BaseAnt {
-	public Scout(GameMap map, Point position) {
+public final class Hunter extends BaseAnt {
+	public Hunter(GameMap map, Point position) {
 		super(map,position);
 	}
 
 	/**
-	 * Picks the next point to move to based on how many points around it are unexplored
+	 * Finds *ALL* the food
 	 * @return The destination point
 	 */
 	protected Point getTarget() {
@@ -40,21 +40,13 @@ public final class Scout extends BaseAnt {
 			}
 		});
 
-		// Loop through all the points on the map to look for areas that are unexplored.
-		// If said area is unexplored, it adds that as a point that is a possible target
+		// Loop through all the points on the map to look for food!.
+		// If it is, go there, otherwise, if there is no food, scout.
 		for (int i = 0; i < map.getRows(); i++) {
 			for (int j = 0; j < map.getCols(); j++) {
 				Point point = new Point(i, j);
-				if (map.getIlk(point).isPassable()) {
-					int unknownCount = 0;
-					for (Point adjacent : map.getAdjacent(point)) {
-						if (map.getIlk(adjacent) == Ilk.UNKNOWN) {
-							unknownCount++;
-						}
-					}
-					if (unknownCount > 0) {
-						targets.add(point);
-					}
+				if(map.getIlk(point)==Ilk.FOOD){
+					targets.add(point);
 				}
 			}
 		}

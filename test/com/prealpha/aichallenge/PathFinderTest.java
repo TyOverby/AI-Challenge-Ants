@@ -21,6 +21,7 @@ import com.prealpha.aichallenge.protocol.Ilk;
 import com.prealpha.aichallenge.protocol.Point;
 
 public final class PathFinderTest {
+	
 	private static final int ROWS = 20;
 
 	private static final int COLS = 20;
