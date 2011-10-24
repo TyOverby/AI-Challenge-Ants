@@ -15,7 +15,7 @@ public class MasterAntAllocator {
 		if (!ants.containsKey(position)) {
 			Ant ant;
 
-			if(totalAntCount<3){
+			if(totalAntCount<5){
 				ant = new Hunter(gameMap,position);
 			}
 			else{
@@ -23,20 +23,24 @@ public class MasterAntAllocator {
 					ant = new Hunter(gameMap,position);
 				}
 				else{
-					ant = new Scout(gameMap,position);
+					if(totalAntCount>30){
+						ant = new Soldier(gameMap,position);
+					}
+					else{
+						ant = new Scout(gameMap,position);
+					}
 				}
 			}
 			ants.put(position, ant);
 		}
 	}
-	
-	public static void removeAnt(int row, int col, int owner) {
-		if (owner == 0) {
-			Point point = new Point(row, col);
-			if (ants.containsKey(point)) {
-				ants.get(point).die();
-				ants.remove(point);
-			}
+
+	public static void removeAnt(int row, int col) {
+		Point point = new Point(row, col);
+		if (ants.containsKey(point)) {
+			ants.get(point).die();
+			ants.remove(point);
+
 		}
 	}
 }

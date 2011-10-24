@@ -35,7 +35,7 @@ final class MyBot extends Bot {
 
 	@Override
 	protected void removeAnt(int row, int col, int owner) {
-		MasterAntAllocator.removeAnt(row, col, owner);
+		MasterAntAllocator.removeAnt(row, col);
 		super.removeAnt(row, col, owner);
 	}
 
