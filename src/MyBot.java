@@ -40,7 +40,7 @@ final class MyBot extends Bot {
 			if (!ants.containsKey(point)) {
 				Ant ant;
 
-				// Make sure that the first 5 ants are hunters
+				// Make sure that the first 10 ants are hunters
 				if(antNum<10){				
 					ant = new Hunter(getMap(), point);
 				}else{
