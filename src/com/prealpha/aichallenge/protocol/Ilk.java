@@ -5,7 +5,7 @@ package com.prealpha.aichallenge.protocol;
  */
 public enum Ilk {
 	/** We've never had visibility on this area. */
-	UNKNOWN(false),
+	UNKNOWN(true),
 
 	/** Water tile. */
 	WATER(false),

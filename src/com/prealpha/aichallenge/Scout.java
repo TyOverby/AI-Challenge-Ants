@@ -13,6 +13,7 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 import com.prealpha.aichallenge.protocol.Aim;
+import com.prealpha.aichallenge.protocol.Game;
 import com.prealpha.aichallenge.protocol.GameMap;
 import com.prealpha.aichallenge.protocol.Ilk;
 import com.prealpha.aichallenge.protocol.Order;
@@ -27,8 +28,6 @@ public final class Scout extends PathFinder implements Ant {
 
 	private List<Point> path;
 
-	private int index;
-
 	private Order order;
 
 	public Scout(GameMap map, Point position) {
@@ -39,37 +38,39 @@ public final class Scout extends PathFinder implements Ant {
 
 	@Override
 	public Order getOrder() {
-		if (path == null || index >= path.size()) {
+		order = doGetOrder();
+		if (order == null) {
 			recalculate();
+			order = doGetOrder();
 		}
-		if (path == null || index >= path.size()) {
-			return null;
-		}
+		return order;
+	}
 
-		Point target = path.get(index++);
-		if (!map.getIlk(target).isPassable()) {
-			recalculate();
-			return getOrder();
-		} else {
-			Set<Aim> directions = map.getDirections(position, target);
-			if (directions.size() != 1) {
-				throw new IllegalStateException("invalid path");
+	private Order doGetOrder() {
+		if (path != null) {
+			int index = path.indexOf(position) + 1;
+			if (index < path.size()) {
+				Point target = path.get(index);
+				if (map.getIlk(target).isPassable()) {
+					Set<Aim> directions = map.getDirections(position, target);
+					if (directions.size() == 1) {
+						Aim direction = directions.iterator().next();
+						return new Order(position, direction);
+					}
+				}
 			}
-			Aim direction = directions.iterator().next();
-			order = new Order(position, direction);
-			return order;
 		}
+		return null;
 	}
 
 	private void recalculate() {
 		if (path != null) {
 			ACTIVE_TARGETS.remove(path.get(path.size() - 1));
 		}
-		index = 0;
 		Point target = getTarget();
 		if (target != null) {
 			path = findPath(position, target);
-			if (path != null) {
+			if (path != null && !path.isEmpty()) {
 				ACTIVE_TARGETS.add(path.get(path.size() - 1));
 			}
 		}
@@ -83,10 +84,10 @@ public final class Scout extends PathFinder implements Ant {
 						int d1 = map.getManhattanDistance(position, p1);
 						int d2 = map.getManhattanDistance(position, p2);
 						if (ACTIVE_TARGETS.contains(p1)) {
-							d1 *= 10 * Math.random();
+							d1 *= Game.MAX_MAP_SIZE;
 						}
 						if (ACTIVE_TARGETS.contains(p2)) {
-							d2 *= 10 * Math.random();
+							d2 *= Game.MAX_MAP_SIZE;
 						}
 						return d1 - d2;
 					}
@@ -118,7 +119,7 @@ public final class Scout extends PathFinder implements Ant {
 
 	@Override
 	public void die() {
-		if (path != null) {
+		if (path != null && !path.isEmpty()) {
 			ACTIVE_TARGETS.remove(path.get(path.size() - 1));
 		}
 	}
