@@ -9,7 +9,7 @@ import com.prealpha.aichallenge.protocol.Order;
 import com.prealpha.aichallenge.protocol.Point;
 
 final class MyBot extends Bot {
-
+	
 	@Override
 	protected void beforeUpdate() {
 		Map<Point, Ant> newAnts = new HashMap<Point, Ant>();
@@ -45,6 +45,9 @@ final class MyBot extends Bot {
 			Order order = ant.getOrder();
 			if (order != null) {
 				issueOrder(order);
+			}
+			if(getGame().getTimeRemaining()<10){
+				break;
 			}
 		}
 	}
