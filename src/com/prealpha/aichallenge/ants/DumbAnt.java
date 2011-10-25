@@ -14,4 +14,8 @@ public class DumbAnt extends BaseAnt{
 		return this.position;
 	}
 
+	@Override
+	protected void onGoalReached(Point position) {
+	}
+
 }

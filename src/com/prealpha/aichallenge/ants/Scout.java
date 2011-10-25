@@ -60,4 +60,8 @@ public final class Scout extends BaseAnt {
 		}
 		return targets.peek();
 	}
+
+	@Override
+	protected void onGoalReached(Point position) {
+	}
 }

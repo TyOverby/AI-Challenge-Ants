@@ -57,6 +57,9 @@ public abstract class BaseAnt extends PathFinder implements Ant {
 					}
 				}
 			}
+			else{
+				this.onGoalReached(this.position);
+			}
 		}
 		return null;
 	}
@@ -80,6 +83,7 @@ public abstract class BaseAnt extends PathFinder implements Ant {
 	 */
 	protected abstract Point getTarget();
 
+	protected abstract void onGoalReached(Point position);
 	/**
 	 * If the order is confirmed, then move this ants position to the new position
 	 */
@@ -94,5 +98,6 @@ public abstract class BaseAnt extends PathFinder implements Ant {
 		if (path != null && !path.isEmpty()) {
 			ACTIVE_TARGETS.remove(path.get(path.size() - 1));
 		}
+		MasterAntSpawner.decommissionAnt(this);
 	}
 }
