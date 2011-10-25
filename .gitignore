@@ -2,6 +2,7 @@
 /tools
 *.class
 *.jar
+*.zip
 *.swp
 *.swo
 *~
