@@ -4,7 +4,7 @@
  * All rights reserved.
  */
 
-package com.prealpha.aichallenge;
+package com.prealpha.aichallenge.ants;
 
 import com.prealpha.aichallenge.protocol.Order;
 

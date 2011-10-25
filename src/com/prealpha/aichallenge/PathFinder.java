@@ -1,6 +1,6 @@
 /*
  * PathFinder.java
- * Copyright (C) 2011 Meyer Kizner
+ * Copyright (C) 2011 Meyer Kizner, Ty Overby
  * All rights reserved.
  */
 
@@ -11,7 +11,7 @@ import java.util.List;
 import com.prealpha.aichallenge.protocol.GameMap;
 import com.prealpha.aichallenge.protocol.Point;
 
-class PathFinder {
+public class PathFinder {
 	private final GameMap map;
 
 	private PathSegment[][] segments;
