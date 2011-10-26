@@ -52,7 +52,7 @@ final class MyBot extends Bot {
 			if (order != null) {
 				issueOrder(order);
 			}
-			if(getGame().getTimeRemaining()<10){
+			if(getGame().getTimeRemaining()<20){
 				break;
 			}
 		}
