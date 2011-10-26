@@ -3,9 +3,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.prealpha.aichallenge.ants.Ant;
-import com.prealpha.aichallenge.ants.HunterCounselor;
-import com.prealpha.aichallenge.ants.MasterAntSpawner;
-import com.prealpha.aichallenge.ants.ScoutCounselor;
+import com.prealpha.aichallenge.ants.counselor.HunterCounselor;
+import com.prealpha.aichallenge.ants.counselor.MasterAntAllocator;
+import com.prealpha.aichallenge.ants.counselor.ScoutCounselor;
+import com.prealpha.aichallenge.ants.counselor.SoldierCounselor;
 import com.prealpha.aichallenge.protocol.Bot;
 import com.prealpha.aichallenge.protocol.Order;
 import com.prealpha.aichallenge.protocol.Point;
@@ -18,11 +19,11 @@ final class MyBot extends Bot {
 		for (Order order : getOrders()) {
 			Point origin = order.getOrigin();
 			Point target = order.getTarget(getMap());
-			Ant ant = MasterAntSpawner.ants.get(origin);
+			Ant ant = MasterAntAllocator.ants.get(origin);
 			ant.orderConfirmed();
 			newAnts.put(target, ant);
 		}
-		MasterAntSpawner.ants = newAnts;
+		MasterAntAllocator.ants = newAnts;
 		super.beforeUpdate();
 	}
 
@@ -30,14 +31,14 @@ final class MyBot extends Bot {
 	protected void addAnt(int row, int col, int owner) {
 		if (owner == 0) {
 			Point point = new Point(row, col);
-			MasterAntSpawner.addAnt(point, getMap());
+			MasterAntAllocator.addAnt(point, getMap());
 		}
 		super.addAnt(row, col, owner);
 	}
 
 	@Override
 	protected void removeAnt(int row, int col, int owner) {
-		MasterAntSpawner.removeAnt(row, col);
+		MasterAntAllocator.removeAnt(row, col);
 		super.removeAnt(row, col, owner);
 	}
 
@@ -45,7 +46,8 @@ final class MyBot extends Bot {
 	protected void doTurn() {
 		HunterCounselor.update(getMap());
 		ScoutCounselor.update(getMap());
-		for (Ant ant : MasterAntSpawner.ants.values()) {
+		SoldierCounselor.update(getMap());
+		for (Ant ant : MasterAntAllocator.ants.values()) {
 			Order order = ant.getOrder();
 			if (order != null) {
 				issueOrder(order);

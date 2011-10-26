@@ -11,6 +11,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.prealpha.aichallenge.ants.counselor.SoldierCounselor;
+
 public final class GameMap {
 	private final int rows;
 
@@ -332,6 +334,7 @@ public final class GameMap {
 	void updateHills(Point tile, int owner) {
 		if (owner > 0) {
 			enemyHills.add(tile);
+			SoldierCounselor.addHill(tile);
 		} else {
 			myHills.add(tile);
 		}

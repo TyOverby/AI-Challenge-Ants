@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.prealpha.aichallenge.PathFinder;
+import com.prealpha.aichallenge.ants.counselor.MasterAntAllocator;
 import com.prealpha.aichallenge.protocol.Aim;
 import com.prealpha.aichallenge.protocol.GameMap;
 import com.prealpha.aichallenge.protocol.Order;
@@ -27,6 +28,8 @@ public abstract class BaseAnt extends PathFinder implements Ant {
 		this.position = position;
 	}
 
+	
+	
 	@Override
 	public Order getOrder() {
 		order = doGetOrder();
@@ -76,7 +79,22 @@ public abstract class BaseAnt extends PathFinder implements Ant {
 			}
 		}
 	}
+	
+	@Override 
+	public void setTarget(Point target){
+		if (target != null) {
+			path = findPath(position, target);
+			if (path != null && !path.isEmpty()) {
+				ACTIVE_TARGETS.add(path.get(path.size() - 1));
+			}
+		}
+	}
 
+	@Override
+	public Point getLocation(){
+		return this.position;
+	}
+	
 	/**
 	 * Picks the next point to move to 
 	 * @return The destination point
@@ -98,6 +116,6 @@ public abstract class BaseAnt extends PathFinder implements Ant {
 		if (path != null && !path.isEmpty()) {
 			ACTIVE_TARGETS.remove(path.get(path.size() - 1));
 		}
-		MasterAntSpawner.decommissionAnt(this);
+		MasterAntAllocator.decommissionAnt(this);
 	}
 }

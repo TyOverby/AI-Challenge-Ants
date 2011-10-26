@@ -7,11 +7,16 @@
 package com.prealpha.aichallenge.ants;
 
 import com.prealpha.aichallenge.protocol.Order;
+import com.prealpha.aichallenge.protocol.Point;
 
 public interface Ant {
 	Order getOrder();
 
 	void orderConfirmed();
+	
+	void setTarget(Point point);
+	
+	Point getLocation();
 
 	void die();
 }

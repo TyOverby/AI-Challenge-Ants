@@ -1,5 +1,6 @@
 package com.prealpha.aichallenge.ants;
 
+import com.prealpha.aichallenge.protocol.Aim;
 import com.prealpha.aichallenge.protocol.GameMap;
 import com.prealpha.aichallenge.protocol.Point;
 
@@ -11,7 +12,7 @@ public class DumbAnt extends BaseAnt{
 
 	@Override
 	protected Point getTarget() {
-		return this.position;
+		return map.getPoint(this.position,Aim.NORTH);
 	}
 
 	@Override

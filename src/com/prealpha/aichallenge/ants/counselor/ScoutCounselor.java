@@ -1,8 +1,9 @@
-package com.prealpha.aichallenge.ants;
+package com.prealpha.aichallenge.ants.counselor;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
+import com.prealpha.aichallenge.ants.Ant;
 import com.prealpha.aichallenge.protocol.GameMap;
 import com.prealpha.aichallenge.protocol.Ilk;
 import com.prealpha.aichallenge.protocol.Point;

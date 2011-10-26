@@ -6,6 +6,8 @@
 
 package com.prealpha.aichallenge.ants;
 
+import com.prealpha.aichallenge.ants.counselor.HunterCounselor;
+import com.prealpha.aichallenge.ants.counselor.ScoutCounselor;
 import com.prealpha.aichallenge.protocol.GameMap;
 import com.prealpha.aichallenge.protocol.Point;
 
