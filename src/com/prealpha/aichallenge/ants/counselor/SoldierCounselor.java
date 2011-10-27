@@ -25,7 +25,13 @@ public class SoldierCounselor {
 		// If it was a base, tell all the other soldiers
 		if(basePoints.remove(location)){
 			for(Soldier soldier:soldiers){
-				soldier.setTarget(getTarget());
+				Point newTarget = getTarget();
+				if(newTarget==null){
+					soldier.setTarget(ScoutCounselor.getJob(soldier));
+				}
+				else{
+					soldier.setTarget(newTarget);
+				}
 			}
 		}
 		else{
@@ -49,6 +55,7 @@ public class SoldierCounselor {
 			position = (Point) gameMap.getMyHills().toArray()[0];
 		}
 		else{
+			// Target a hill closest to 0,0
 			position = new Point(0,0);
 		}
 
@@ -63,9 +70,7 @@ public class SoldierCounselor {
 			}
 		});
 
-		// Loop through all the points on the map to look for food!.
-		// If it is, go there, otherwise, if there is no food, scout.	
-		for(Point hill:gameMap.getEnemyHills()){
+		for(Point hill:basePoints){
 			targets.add(hill);
 		}
 		

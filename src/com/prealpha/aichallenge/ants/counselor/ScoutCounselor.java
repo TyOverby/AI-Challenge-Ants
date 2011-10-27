@@ -16,7 +16,8 @@ public class ScoutCounselor {
 		ScoutCounselor.gameMap = gameMap;
 	}
 
-	public static Point getJob(final Point position,Ant ant){
+	public static Point getJob(Ant ant){
+		final Point position = ant.getLocation();
 		// This Priority queue prioritizes points that are closer to the ant
 		PriorityQueue<Point> targets = new PriorityQueue<Point>(1,
 				new Comparator<Point>() {

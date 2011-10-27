@@ -1,5 +1,3 @@
-cd src
-make all
-mv MyBot.jar ../
-cp ../MyBot.jar ../../tools/
-make clean
+cd src;
+make;
+mv MyBot.jar ../../tools/

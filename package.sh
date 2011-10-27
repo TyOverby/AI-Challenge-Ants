@@ -1,3 +1,2 @@
-cd src
-zip -r build.zip *.* com
-mv build.zip ../
+cd src;
+zip -r package.zip *.* com

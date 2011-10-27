@@ -14,6 +14,7 @@ import com.prealpha.aichallenge.protocol.Point;
 public abstract class BaseAnt extends PathFinder implements Ant {
 	protected static final Set<Point> ACTIVE_TARGETS = new HashSet<Point>();
 
+	protected List<Point> targets;
 	protected final GameMap map;
 
 	protected Point position;

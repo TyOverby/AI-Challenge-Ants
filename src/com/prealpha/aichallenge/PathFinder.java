@@ -70,7 +70,7 @@ public class PathFinder {
 
 	private double getDistance(PathSegment segment, Point end) {
 		int cost = segment.getGeneration();
-		int heuristic = map.getManhattanDistance(segment.getLocation(), end);
+		double heuristic = map.getDistance(segment.getLocation(), end);
 		return cost + ((1025.0 / 1024.0) * heuristic);
 	}
 }

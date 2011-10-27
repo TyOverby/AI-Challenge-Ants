@@ -20,7 +20,7 @@ public class Soldier extends BaseAnt{
 		}
 		else{
 			// Otherwise, go scout;
-			return ScoutCounselor.getJob(this.position, this);
+			return ScoutCounselor.getJob(this);
 		}
 	}
 

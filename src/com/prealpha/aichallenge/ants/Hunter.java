@@ -27,7 +27,7 @@ public final class Hunter extends BaseAnt {
 		}
 		else{
 			//return hunterPoint;
-			return ScoutCounselor.getJob(this.position, this);
+			return ScoutCounselor.getJob(this);
 		}
 	}
 
