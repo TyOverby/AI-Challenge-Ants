@@ -15,6 +15,7 @@ public interface Ant {
 	void orderConfirmed();
 	
 	void setTarget(Point point);
+	void addTarget(Point point);
 	
 	Point getLocation();
 

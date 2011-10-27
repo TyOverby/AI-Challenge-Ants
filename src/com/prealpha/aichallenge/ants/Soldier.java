@@ -26,6 +26,7 @@ public class Soldier extends BaseAnt{
 
 	@Override
 	protected void onGoalReached(Point position) {
+		super.onGoalReached(position);
 		SoldierCounselor.removeHill(position);
 	}
 	

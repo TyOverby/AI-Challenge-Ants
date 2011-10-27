@@ -33,6 +33,7 @@ public final class Hunter extends BaseAnt {
 
 	@Override
 	protected void onGoalReached(Point p) {
+		super.onGoalReached(p);
 		HunterCounselor.releaseAnt(this);
 	}
 }

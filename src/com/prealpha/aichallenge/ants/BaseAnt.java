@@ -3,6 +3,7 @@ package com.prealpha.aichallenge.ants;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Stack;
 
 import com.prealpha.aichallenge.PathFinder;
 import com.prealpha.aichallenge.ants.counselor.MasterAntAllocator;
@@ -14,7 +15,8 @@ import com.prealpha.aichallenge.protocol.Point;
 public abstract class BaseAnt extends PathFinder implements Ant {
 	protected static final Set<Point> ACTIVE_TARGETS = new HashSet<Point>();
 
-	protected List<Point> targets;
+	protected Stack<Point> targets = new Stack<Point>();
+	
 	protected final GameMap map;
 
 	protected Point position;
@@ -33,6 +35,13 @@ public abstract class BaseAnt extends PathFinder implements Ant {
 	
 	@Override
 	public Order getOrder() {
+		// If the current path that we are on isn't going to the first target in our list
+		if(!path.get(path.size()-1).equals(targets.peek())){
+			// Then recalculate with the new target
+			this.path=findPath(position, targets.peek());
+		}
+		
+		
 		order = doGetOrder();
 		// If the order is unavailable, recalculate and try again.
 		if (order == null) {
@@ -77,9 +86,11 @@ public abstract class BaseAnt extends PathFinder implements Ant {
 	
 	@Override 
 	public void setTarget(Point target){
-		if (target != null) {
-			path = findPath(position, target);
-		}
+		this.targets.push(target);
+	}
+	@Override
+	public void addTarget(Point target){
+		this.targets.add(target);
 	}
 
 	@Override
@@ -93,7 +104,9 @@ public abstract class BaseAnt extends PathFinder implements Ant {
 	 */
 	protected abstract Point getTarget();
 
-	protected abstract void onGoalReached(Point position);
+	protected void onGoalReached(Point position){
+		this.targets.pop();
+	}
 	/**
 	 * If the order is confirmed, then move this ants position to the new position
 	 */

@@ -63,5 +63,6 @@ public final class Scout extends BaseAnt {
 
 	@Override
 	protected void onGoalReached(Point position) {
+		super.onGoalReached(position);
 	}
 }
