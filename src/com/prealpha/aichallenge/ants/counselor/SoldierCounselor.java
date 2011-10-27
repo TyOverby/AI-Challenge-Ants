@@ -6,6 +6,7 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 import com.prealpha.aichallenge.ants.Ant;
+import com.prealpha.aichallenge.ants.DumbAnt;
 import com.prealpha.aichallenge.ants.Soldier;
 import com.prealpha.aichallenge.protocol.GameMap;
 import com.prealpha.aichallenge.protocol.Point;
@@ -17,6 +18,25 @@ public class SoldierCounselor {
 
 	public static void update(GameMap gameMap){
 		SoldierCounselor.gameMap = gameMap;
+		
+		// If one of our basePoints is visible but not in the list of enemy hills
+		// then remove it
+		Set<Point> toRemove = new HashSet<Point>(5);
+		for(Point point:basePoints){
+			if(gameMap.isVisible(point)){
+				if(!gameMap.getEnemyHills().contains(point)){
+					toRemove.add(point);
+					// If ants are currently routing to the point, reset them
+					if(point.equals(getTarget(new DumbAnt(gameMap,new Point(0,0)))));
+					{
+						for(Soldier soldier:soldiers){
+							soldier.setTarget(getTarget(soldier));
+						}
+					}
+				}
+			}
+		}
+		basePoints.removeAll(toRemove);
 	}
 
 	public static void addHill(Point location){

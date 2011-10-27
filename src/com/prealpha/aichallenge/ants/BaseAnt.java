@@ -69,15 +69,9 @@ public abstract class BaseAnt extends PathFinder implements Ant {
 	}
 
 	private void recalculate() {
-		if (path != null) {
-			ACTIVE_TARGETS.remove(path.get(path.size() - 1));
-		}
 		Point target = getTarget();
 		if (target != null) {
 			path = findPath(position, target);
-			if (path != null && !path.isEmpty()) {
-				ACTIVE_TARGETS.add(path.get(path.size() - 1));
-			}
 		}
 	}
 	
@@ -85,9 +79,6 @@ public abstract class BaseAnt extends PathFinder implements Ant {
 	public void setTarget(Point target){
 		if (target != null) {
 			path = findPath(position, target);
-			if (path != null && !path.isEmpty()) {
-				ACTIVE_TARGETS.add(path.get(path.size() - 1));
-			}
 		}
 	}
 
