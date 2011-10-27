@@ -14,7 +14,7 @@ public class Soldier extends BaseAnt{
 	@Override
 	protected Point getTarget() {		
 		// If it can find a hill, attack the shit out of it
-		Point hillPoint = SoldierCounselor.getTarget();
+		Point hillPoint = SoldierCounselor.getTarget(this);
 		if(hillPoint!=null){
 			return hillPoint;
 		}

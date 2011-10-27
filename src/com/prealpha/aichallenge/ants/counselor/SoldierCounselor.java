@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Set;
 
+import com.prealpha.aichallenge.ants.Ant;
 import com.prealpha.aichallenge.ants.Soldier;
 import com.prealpha.aichallenge.protocol.GameMap;
 import com.prealpha.aichallenge.protocol.Point;
@@ -25,7 +26,7 @@ public class SoldierCounselor {
 		// If it was a base, tell all the other soldiers
 		if(basePoints.remove(location)){
 			for(Soldier soldier:soldiers){
-				Point newTarget = getTarget();
+				Point newTarget = getTarget(soldier);
 				if(newTarget==null){
 					soldier.setTarget(ScoutCounselor.getJob(soldier));
 				}
@@ -46,7 +47,7 @@ public class SoldierCounselor {
 		soldiers.remove(soldier);
 	}
 
-	public static Point getTarget(){
+	public static Point getTarget(Ant ant){
 		// We need a point to base the distance off of
 		final Point position;
 		// If we have hills left
@@ -56,7 +57,7 @@ public class SoldierCounselor {
 		}
 		else{
 			// Target a hill closest to 0,0
-			position = new Point(0,0);
+			position = ant.getLocation();
 		}
 
 		// This Priority queue prioritizes points that are closer to the ant
